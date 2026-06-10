@@ -1,0 +1,13 @@
+# Appended to pyproject.toml by /py-new — tool config, single source of truth.
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config", "-ra"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# Defaults (E4/E7/E9/F) plus: import sort, modernize, bugbear, simplify, ruff-specific.
+# No full E class — line length is the formatter's job.
+extend-select = ["I", "UP", "B", "SIM", "RUF"]
