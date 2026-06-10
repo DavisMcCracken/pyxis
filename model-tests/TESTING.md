@@ -4,13 +4,15 @@ Measures whether a model follows the AGENTS.md workflow unaided. Four tasks, eac
 
 ## Protocol
 
-1. Copy a fixture (or empty dir for T1) to `runs/<model>/<task>/`.
-2. Open a fresh session there with the model under test. Fixtures carry their own `AGENTS.md` + `CLAUDE.md`; for T1, pre-place both (variant A) or rely on `/py-new` (variant B, skills installed).
-3. Paste the task prompt verbatim. No coaching, no follow-up hints.
-4. Save the transcript and final tree into the run dir.
-5. Audit with a strong model against the rubric below. For every failed critical check ask: **would clearer AGENTS.md wording have prevented this?** Yes -> base patch candidate; no -> model capability limit. That distinction is the entire point of the audit.
+1. **Spawn outside this repo** — e.g. `C:\Users\Davis\model-test-runs\<model>\<task>\`. Sessions opened inside the repo also load the repo-root `CLAUDE.md` from the parent dir (drift risk) and nest git repos.
+2. Copy a fixture there (or, for T1/T4, an empty dir plus `AGENTS.md` + a `CLAUDE.md` containing `@AGENTS.md`). Fixtures carry their own rules files.
+3. Skills state must match what you're testing: deploy the pack to `~/.claude/skills/` for the integrated workflow (variant B), or rename skills away for bare-rules runs (variant A).
+4. Launch the model under test from inside the run dir (`claude --model <m>`), fresh session per task, and paste the task prompt verbatim. No coaching; if the model asks a question, answer exactly "use your judgment" and note it.
+5. Don't run commands yourself mid-test — only approve permission prompts. When the model declares done: `/export` the transcript into the run dir, close the session.
+6. Copy the run dir back to `runs/<model>/<task>/` here for audit.
+7. Audit with a strong model against the rubric below. For every failed critical check ask: **would clearer AGENTS.md wording have prevented this?** Yes -> base patch candidate; no -> model capability limit. That distinction is the entire point of the audit.
 
-Scoring: criticals are pass/fail; score = criticals passed / total. Minors noted, not scored.
+Scoring: criticals are pass/fail; score = criticals passed / total. Minors noted, not scored. Suggested order: T3, T1, T2, T4 — T3 discriminates hardest.
 
 ## T1 — Scaffold (bootstrap rules)
 
