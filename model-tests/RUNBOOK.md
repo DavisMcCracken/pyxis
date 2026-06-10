@@ -5,7 +5,7 @@ Operator checklist. One run = one model × one task. Rubric and scoring live in 
 ## Once, before the first run ever
 
 - [x] Skill pack deployed to `~\.claude\skills\` (done 2026-06-10)
-- [ ] `New-Item -ItemType Directory -Force C:\Users\Davis\model-test-runs | Out-Null`
+- [x] `New-Item -ItemType Directory -Force C:\Users\Davis\model-test-runs | Out-Null`
 
 ## Per run
 
