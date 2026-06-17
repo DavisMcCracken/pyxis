@@ -1,0 +1,57 @@
+# Change Log
+
+## 2026-06-15 — Revised plan implementation
+
+### Agent rules
+
+- Required a valid RED before production edits for behavior changes and bug fixes.
+- Defined valid RED as a test that collects, executes, and fails because the requested behavior is missing or wrong.
+- Clarified that scaffold smoke tests do not replace tests of requested behavior.
+- Required assertions for each intentionally changed public operation or observable branch, without prescribing internal-path tests.
+- Required throwaway spikes to be deleted before handoff unless the user asks to keep them.
+- Kept the root `AGENTS.md` and the `py-new` template synchronized.
+
+### Skills
+
+- Broadened `tdd` to trigger on user-visible behavior changes and straightforward reproducible bugs.
+- Made `tdd` infer settled interface and design decisions from the request and repository before asking questions.
+- Narrowed `diagnose` to uncertain, intermittent, cross-system, performance, or unclear-cause failures.
+- Extended `py-new` through the first requested behavior instead of ending at a passing scaffold.
+- Updated the skill catalog to match the revised lifecycle and spike policy.
+
+### Evaluation protocol
+
+- Split scoring into functional correctness and workflow adherence.
+- Added a separate validity label so contaminated or incomplete runs cannot pass silently.
+- Required the canonical `AGENTS.md` overlay for every run.
+- Added `run.json` metadata for requested model, provider-reported model, harness, isolation, prompt, pack, rule hash, timestamps, and interventions.
+- Added copy exclusions for VCS, environment, cache, and harness artifacts.
+- Added repeated-trial guidance for noisy model outcomes.
+- Added explicit trial identifiers and fail-if-exists run directories so repeated trials cannot overwrite each other.
+
+### Transcript tooling
+
+- Added `model-tests/scripts/extract_opencode_transcript.py` to produce reviewable Markdown from opencode HTML exports while omitting hidden reasoning.
+- Added focused tests covering messages, tool calls, tool results, provider/model metadata, and malformed exports.
+
+### Records
+
+- Expanded `runs/log.md` to separate requested and provider-reported models, harness, isolation, and validity.
+- Marked historical in-repo opencode runs as contaminated rather than directly comparable.
+- Updated `FINDINGS.md` to distinguish implemented patches from validation still required.
+
+### Deliberate omissions
+
+- Did not add an `hasattr()` scaffold cycle; it would reward structural smoke tests over behavior.
+- Did not require tests for internal implementation paths; the rule targets observable behavior.
+- Did not add a repository-wide ASCII-only rule or mandatory final-command recital; neither was supported by the model-test evidence.
+
+### Validation
+
+- Transcript extractor: Ruff lint/format clean, `ty` clean, 2 tests passed, and real Deepseek and big-pickle exports rendered tool events without hidden reasoning.
+- Root/template `AGENTS.md`: byte-identical SHA-256 `6ECBAE38C34FB186A011ACCE77BCFBD5CE56FFB2EFFDD67B032D43A34E161CD9`.
+- `examples/ttlcache`: full verify loop passed, including 7 tests.
+- `examples/wordstats`: full verify loop passed, including 19 tests.
+- Isolated pack deployment: revised `tdd`, `diagnose`, `py-new`, and canonical AGENTS template copied to `C:\Users\Davis\claude-test-pack\skills` and hash-checked.
+- Skill structure: `tdd`, `diagnose`, and `py-new` all passed the `skill-creator` `quick_validate.py` check.
+- Empirical acceptance matrix: not run in this change set; it requires interactive model sessions. Use the two-trial conditions in `RUNBOOK.md` and `REVISED-PLAN-SECOND-REVIEW.md` before marking F1-F4 validated.
