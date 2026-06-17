@@ -31,8 +31,9 @@
 
 ### Transcript tooling
 
-- Added `model-tests/scripts/extract_opencode_transcript.py` to produce reviewable Markdown from opencode HTML exports while omitting hidden reasoning.
-- Added focused tests covering messages, tool calls, tool results, provider/model metadata, and malformed exports.
+- Added `model-tests/scripts/extract_opencode_transcript.py` to produce reviewable Markdown from opencode HTML exports while omitting hidden reasoning. Diagnostics go through `logging` to stderr with a `--verbose` flag; transcript output goes to stdout or `--output`.
+- Added focused tests covering file and stdout rendering, messages, tool calls, tool results, provider/model metadata, malformed and missing exports, and a `hypothesis` property test that arbitrary session-data payloads never crash the parser. Tests call `main()` directly.
+- Added `model-tests/pyproject.toml` and `uv.lock` so the harness runs the standard `uv run ruff/ty/pytest` verify loop with pinned dev dependencies.
 
 ### Records
 

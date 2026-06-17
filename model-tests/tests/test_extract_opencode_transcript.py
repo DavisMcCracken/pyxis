@@ -1,17 +1,24 @@
 """Tests for the opencode HTML transcript extractor."""
 
 import base64
+import importlib.util
 import json
-import subprocess
-import sys
 from pathlib import Path
 
+import pytest
+from hypothesis import given
+from hypothesis import strategies as st
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "extract_opencode_transcript.py"
 
+_spec = importlib.util.spec_from_file_location("extract_opencode_transcript", SCRIPT)
+assert _spec is not None and _spec.loader is not None
+extract = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(extract)
 
-def _write_export(path: Path) -> None:
-    session = {
+
+def _session() -> dict[str, object]:
+    return {
         "header": {"version": 1},
         "leafId": "assistant-1",
         "systemPrompt": "test prompt",
@@ -60,27 +67,17 @@ def _write_export(path: Path) -> None:
             },
         ],
     }
-    encoded = base64.b64encode(json.dumps(session).encode()).decode()
+
+
+def _write_export(path: Path, session: dict[str, object] | None = None) -> None:
+    encoded = base64.b64encode(json.dumps(session or _session()).encode()).decode()
     path.write_text(
         f'<html><script id="session-data" type="application/json">{encoded}</script></html>',
         encoding="utf-8",
     )
 
 
-def test_extracts_audit_focused_markdown(tmp_path: Path) -> None:
-    source = tmp_path / "transcript.html"
-    output = tmp_path / "transcript.md"
-    _write_export(source)
-
-    result = subprocess.run(
-        [sys.executable, str(SCRIPT), str(source), "--output", str(output)],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-
-    assert result.returncode == 0, result.stderr
-    rendered = output.read_text(encoding="utf-8")
+def _assert_audit_content(rendered: str) -> None:
     assert "Provider: `opencode`" in rendered
     assert "Model: `test-model`" in rendered
     assert "## User\n\nAdd a feature." in rendered
@@ -90,16 +87,62 @@ def test_extracts_audit_focused_markdown(tmp_path: Path) -> None:
     assert "hidden reasoning" not in rendered
 
 
-def test_rejects_html_without_session_data(tmp_path: Path) -> None:
+def test_extracts_audit_focused_markdown_to_file(tmp_path: Path) -> None:
+    source = tmp_path / "transcript.html"
+    output = tmp_path / "transcript.md"
+    _write_export(source)
+
+    assert extract.main([str(source), "--output", str(output)]) == 0
+    _assert_audit_content(output.read_text(encoding="utf-8"))
+
+
+def test_extracts_audit_focused_markdown_to_stdout(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    source = tmp_path / "transcript.html"
+    _write_export(source)
+
+    assert extract.main([str(source)]) == 0
+    captured = capsys.readouterr()
+    _assert_audit_content(captured.out)
+
+
+def test_rejects_html_without_session_data(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
     source = tmp_path / "invalid.html"
     source.write_text("<html></html>", encoding="utf-8")
 
-    result = subprocess.run(
-        [sys.executable, str(SCRIPT), str(source)],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
+    with caplog.at_level("ERROR"):
+        assert extract.main([str(source)]) == 1
+    assert "session-data" in caplog.text
 
-    assert result.returncode != 0
-    assert "session-data" in result.stderr
+
+def test_rejects_missing_source(tmp_path: Path, caplog: pytest.LogCaptureFixture) -> None:
+    missing = tmp_path / "does-not-exist.html"
+
+    with caplog.at_level("ERROR"):
+        assert extract.main([str(missing)]) == 1
+    assert caplog.text
+
+
+@given(
+    payload=st.text(
+        alphabet=st.characters(codec="utf-8", exclude_categories=("Cs",)),
+        max_size=64,
+    )
+)
+def test_session_data_payload_never_crashes(
+    tmp_path_factory: pytest.TempPathFactory, payload: str
+) -> None:
+    """Arbitrary session-data payloads parse to a dict or raise ValueError, never crash."""
+    source = tmp_path_factory.mktemp("fuzz") / "transcript.html"
+    source.write_text(
+        f'<html><script id="session-data">{payload}</script></html>',
+        encoding="utf-8",
+    )
+    try:
+        result = extract.load_session_data(source)
+    except ValueError:
+        return
+    assert isinstance(result, dict)
