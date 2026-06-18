@@ -1,0 +1,43 @@
+# Findings Ledger
+
+Cross-run aggregation. Per-run evidence lives in `runs/<model>/<task>/AUDIT.md`; this file tracks every finding to a resolution. Patch on pattern, not single instance — a watch item needs a second occurrence (or unambiguous severity) before it becomes a patch.
+
+Statuses: `watch` (logged, needs more evidence) → `patch-candidate` (evidence sufficient, patch drafted) → `patched <commit>` / `rejected <reason>`.
+
+## Rules findings (AGENTS.md / skills)
+
+| ID | Source | Finding | Proposed change | Status |
+|---|---|---|---|---|
+| F1 | haiku-4.5/t3; deepseek-v4-flash-free/t3 | Regression test covered `get()` but not the co-fixed `__len__` path — reverting half the fix stays green. **2nd occurrence (deepseek/t3): boundary test asserts `get()` only; the existing `test_len_counts_only_live_entries` advances 20s (past the boundary), so reverting `__len__` to `<=` keeps all 7 green.** | Require assertions for every intentionally changed public operation or observable branch; do not require tests of internal paths. | **implemented 2026-06-15; validation pending** |
+| F2 | haiku-4.5/t2 (+t1) | **Feature behavior implemented with no behavior test.** T2: `--json` shipped implementation-first, zero tests, C1 hard fail. T1: `slugify` conversion left untested (smoke test only). Proximate cause: `tdd` skill did **not** auto-trigger on the plain feature prompt — its description gates every clause on the user naming "TDD"/"test-first". | Broaden `tdd` to trigger on user-visible behavior changes and straightforward reproducible bugs; make the skill infer settled decisions before asking questions. | **implemented 2026-06-15; validation pending** |
+| F3 | haiku-4.5/t2; deepseek-v4-flash-free/t2 | AGENTS.md Workflow rule "new feature → test first" is clear but abstract; weaker models don't classify "add a `--json` flag" as a feature. deepseek corroborates the abstractness, but its failure mode was *ordering* not *classification* (see F4). | Add recognizable behavior-change examples to both AGENTS.md copies. | **implemented 2026-06-15; validation pending** |
+| F4 | deepseek-v4-flash-free/t2; big-pickle/t2 | **Feature test written but AFTER implementation (no RED) — distinct mode from F2/F3.** Model *recognized* `--json` as test-worthy and wrote correct capsys tests, but edited `cli.py` first and added the tests afterward, never observing red. **2nd occurrence (big-pickle/t2): same mode.** Both are skill-less opencode runs with AGENTS.md as the only lever, so the rule TEXT alone failed — the F2 skill-broadening fix cannot reach skill-less harnesses. Pattern across both: RED-first happens on greenfield (T1 slugify) but is skipped when *modifying existing code* (T2 feature-add, and T3 for big-pickle). Root: the new-feature bullet lacks the bug bullet's "observe RED / No exceptions" emphasis. | Require a valid RED before production edits and define valid RED as the target behavior failing after collection and execution. | **implemented 2026-06-15; validation pending** |
+| F5 | big-pickle/t3 | **Bug-fix discipline collapse — model-fault, not doc.** Fixed both comparisons correctly (C2) but skipped test-first (C1), kept no regression test (C3 — used a throwaway `python -c`), and never ran the verify loop (C5 — `pytest` only, no `ruff`/`ty`). The bug rule (*"always reproduce with a failing test before fixing. No exceptions."*) and the verify-loop rule (exact command given) are already maximally explicit. Correlates with reading no procedural skill: big-pickle followed py-new's steps faithfully on T1 but skipped the AGENTS.md-only discipline on T3. | **None portable** — rule text can't be clearer. In Claude Code a `tdd`/`diagnose` skill firing on T3 could enforce it (F2 family), but that can't reach opencode. Treat as a model-selection signal. | model-fault (no patch) |
+
+Note: F2's C3 sub-finding (T2 shipped stdout-purity correct but **unguarded** — no capsys test) is the same coverage-gap family as F1. Two coverage-gap data points now exist (F1 partial-path, T2 no-guard); if a third appears, consider a single "tests guard every changed behavior path" line rather than three narrow patches.
+
+Note (deepseek/t2, cross-harness): unlike haiku, deepseek **did guard** stdout purity (its tests parse `capsys.out` with `json.loads`), so the "no-guard" sub-finding remains haiku-specific — not a second occurrence. Its only T2 miss was the RED-ordering (F4). Because this harness has no skills, deepseek isolates the AGENTS.md *wording* as the sole lever: it confirms the rule-text patches (F3 examples + F4 RED-emphasis) are the portable fix, while the F2 skill-broadening helps only Claude Code. The F1 partial-path coverage gap now has **2 occurrences** across both models.
+
+## Protocol findings (TESTING.md / RUNBOOK.md)
+
+| ID | Source | Finding | Proposed change | Status |
+|---|---|---|---|---|
+| P1 | haiku-4.5/t3 | Protocol calibration run — export, copy-back, log, no-coaching all clean | none | closed |
+| P2 | haiku-4.5/t1 | Copy-back includes the new project's nested `.git` (`t1/slugger/.git/`) plus `.claude/`, `.pytest_cache/`, `.ruff_cache/`. Nested `.git` makes git treat `slugger/` as an embedded repo (gitlink) → source not tracked as plain files; audit evidence lost on commit. | Exclude VCS, environment, cache, and harness directories during copy-in and copy-back. Historical cleanup remains separate from this protocol patch. | **implemented for future runs 2026-06-15** |
+| P3 | log.md | Log records model as `claude-haiku-4.6`; every transcript banner says **Haiku 4.5** (only haiku in the model list). Typo — runs are haiku-4.5. | Record requested and provider-reported model separately. | **implemented 2026-06-15** |
+| P4 | deepseek-v4-flash-free (all tasks) | **Harness & isolation differ from spec — comparability caveat.** Run via the **opencode** harness (provider field `opencode`, opencode-zen "free deepseek"; injected system prompt is a generic "pi" coding-agent prompt), model `deepseek-v4-flash-free` (tools: read/bash/edit/write only; **no skill layer**), **not Claude Code** → Phase-1 `CLAUDE_CONFIG_DIR` pack/bare variants are N/A. Run **inside the repo** (cwd under `model-tests/runs/...`), violating protocol §1: model `find`/read across the whole repo — read `py-new` from `.agents/skills/` (this *aided* T1) and could reach `examples/` reference solutions (not used). Transcripts are `transcript.html` (not `.md`); t4 had AGENTS.md but no CLAUDE.md. AGENTS.md *was* injected into the system prompt, so per-task rule-following is still validly scored. | Require outside-repo isolation, canonical AGENTS overlay, `run.json`, and separate functional, workflow, and validity reporting. Historical runs remain marked contaminated. | **implemented for future runs 2026-06-15** |
+
+## Phase 2 pre-registered (crowded env — not yet run)
+
+| ID | Prediction | Status |
+|---|---|---|
+| X1 | `prototype` hijacks T4 ("throwaway" description overlap) | pending |
+| X2 | `feature-dev` hijacks T2 | pending |
+| X3 | `triage` hijacks T3 | pending |
+
+## Ideas parking lot
+
+Unscoped improvements that surfaced during testing; promote to a finding when evidence exists.
+
+- **Spike keep-vs-delete — resolved 2026-06-15.** Delete the spike before handoff unless the user explicitly asks to keep it; preserve the verdict in the handoff or durable project notes.
+- **`--last-failed -x` adoption (deepseek/t3 + big-pickle/t3, 2 occ).** Both reran the full `pytest -v` instead of the `--last-failed -x` loop AGENTS.md prescribes (big-pickle didn't really loop at all — see F5). Tiny suites, harmless here. Watch whether weaker models waste cycles on larger suites; if so make the rule more prominent than a Testing-section bullet.
