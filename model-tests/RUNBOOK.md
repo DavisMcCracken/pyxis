@@ -8,6 +8,7 @@ One run = one model x one task. Rubric and scoring live in [TESTING.md](TESTING.
 - [x] Isolated configs exist: `claude-test-pack` (pack only) and `claude-test-bare` (rules only).
 - [ ] After any skill edit, redeploy `skills/` into `claude-test-pack\skills\` before testing.
 - [ ] Confirm the chosen run directory does not already exist. Never reuse a dirty run directory.
+- [ ] Confirm `run.json` will record the repo commit, AGENTS hash, skill-tree hash, and config directory used for this run.
 
 ## 1. Prepare
 
@@ -20,10 +21,41 @@ $task = "<t1|t2|t3|t4>"
 $trial = "trial-1"
 $harness = "claude-code"
 $isolation = "pack" # or bare / crowded
+$claudeConfigDir = "C:\Users\Davis\claude-test-pack" # bare: claude-test-bare; crowded: $null
 $run = "C:\Users\Davis\model-test-runs\$model\$task\$trial"
 
 if (Test-Path $run) { throw "Run directory already exists: $run" }
 New-Item -ItemType Directory -Force $run | Out-Null
+```
+
+Define a deterministic content hash for the deployed local skill tree:
+
+```powershell
+function Get-DirectoryContentSha256 {
+  param([Parameter(Mandatory)][string]$Path)
+
+  $root = (Resolve-Path $Path).Path
+  $lines = Get-ChildItem $root -Recurse -File |
+    Sort-Object FullName |
+    ForEach-Object {
+      $relative = $_.FullName.Substring($root.Length + 1).Replace('\', '/')
+      $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
+      "$relative $hash"
+    }
+  $bytes = [System.Text.Encoding]::UTF8.GetBytes(($lines -join "`n"))
+  $sha = [System.Security.Cryptography.SHA256]::Create()
+  [System.BitConverter]::ToString($sha.ComputeHash($bytes)).Replace("-", "").ToLower()
+}
+```
+
+Choose the skill tree that the harness will actually see:
+
+```powershell
+$skillsHashRoot = if ($null -ne $claudeConfigDir -and (Test-Path "$claudeConfigDir\skills")) {
+  "$claudeConfigDir\skills"
+} else {
+  "$repo\skills"
+}
 ```
 
 Copy the fixture when needed:
@@ -71,7 +103,11 @@ $metadata = [ordered]@{
   harness = $harness
   run_cwd = $run
   isolation_mode = $isolation
+  claude_config_dir = $claudeConfigDir
+  repo_commit = (git -C $repo rev-parse HEAD).Trim()
   agents_sha256 = (Get-FileHash "$run\AGENTS.md" -Algorithm SHA256).Hash.ToLower()
+  skills_hash_root = $skillsHashRoot
+  skills_tree_sha256 = Get-DirectoryContentSha256 $skillsHashRoot
   prompt = $prompt
   started_at = (Get-Date).ToUniversalTime().ToString("o")
   finished_at = $null
@@ -85,7 +121,11 @@ $metadata | ConvertTo-Json -Depth 4 | Set-Content "$run\run.json"
 Pack-enabled Phase 1:
 
 ```powershell
-$env:CLAUDE_CONFIG_DIR = "C:\Users\Davis\claude-test-pack"
+if ($null -eq $claudeConfigDir) {
+  Remove-Item Env:\CLAUDE_CONFIG_DIR -ErrorAction SilentlyContinue
+} else {
+  $env:CLAUDE_CONFIG_DIR = $claudeConfigDir
+}
 Set-Location $run
 claude --model $model
 ```
@@ -127,7 +167,7 @@ Copy back source, tests, transcript, audit artifacts, and `run.json` only. The m
 
 ## 6. Log and Audit
 
-Append a row to `runs/log.md` with date, requested model, provider-reported model, harness, isolation, task, trial, questions, validity, and notes.
+Append a row to [RUNS-LOG.md](RUNS-LOG.md) with date, requested model, provider-reported model, harness, isolation, task, trial, questions, validity, and notes. Keep the central log outside `runs/`; `runs/` is ignored so bulky transcripts and generated projects do not enter the repository.
 
 Audit prompt:
 
