@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development.
+description: Builds features and fixes straightforward reproducible bugs one vertical red-green-refactor slice at a time. Use when implementing or changing user-visible behavior in an existing codebase, including functions, CLI flags, endpoints, output formats, and ordinary bug fixes.
 ---
 
 # Test-Driven Development
@@ -38,24 +38,20 @@ One test -> minimal implementation -> repeat. Each test responds to what the pre
 
 If the project keeps domain docs, use the `CONTEXT.md` glossary so test names and interface vocabulary match the project's language, and respect ADRs in the area you're touching.
 
-Before writing any code:
-
-- Confirm with the user: what should the public interface look like, and which behaviors matter most? You can't test everything — prioritize critical paths and complex logic over exhaustive edge cases.
-- Design the interface for depth and testability: accept dependencies, don't create them; return results, don't produce side effects; small surface. See [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md).
-- List behaviors to test (not implementation steps).
+Before writing code, infer the public interface and highest-priority behavior from the request, existing code, glossary, and ADRs. Ask the user only when a material ambiguity remains; otherwise state any assumption briefly and proceed. List behaviors, not implementation steps.
 
 For a non-trivial design (new module, schema, public API, algorithm choice), state 2–3 candidate approaches with trade-offs first — AGENTS.md Workflow rule. For a full interactive design session, the `grill-me` skill is the heavyweight version.
 
 ### 2. Tracer bullet
 
-Write ONE test that confirms ONE thing end-to-end:
+Before editing production code, write ONE test for ONE observable behavior and run the narrowest useful command:
 
 ```
 RED:   write test for first behavior -> watch it fail
 GREEN: minimal code to pass -> watch it pass
 ```
 
-The failure must be the assertion failing — a collection error or `ImportError` is not RED, it's a broken test.
+Valid RED means the intended test was collected and executed, and the failure points to the missing or incorrect behavior. Collection, import, syntax, fixture, and unrelated setup failures mean the test is broken, not RED.
 
 ### 3. Incremental loop
 
@@ -77,7 +73,7 @@ Only at GREEN, never while RED. Candidates:
 - Primitive obsession -> introduce a value type
 - Problems the new code reveals in existing code
 
-Run tests after each refactor step. After the change set, run the full verify loop from AGENTS.md (`ruff check --fix` -> `ruff format` -> `ty check` -> `pytest`).
+Run tests after each refactor step. Before the full verify loop, confirm tests cover every public operation or observable branch intentionally changed. Do not add tests for internal paths solely because they were edited. After the change set, run the full verify loop from AGENTS.md (`ruff check --fix` -> `ruff format` -> `ty check` -> `pytest`).
 
 ## Bug fixes
 
@@ -89,7 +85,7 @@ Enter the loop at RED: reproduce the bug with a failing test before touching the
 [ ] Test describes behavior, not implementation
 [ ] Test uses public interface only
 [ ] Test would survive an internal refactor
-[ ] RED was a real assertion failure, not a collection error
+[ ] RED collected and executed, then failed for the target behavior
 [ ] Code is minimal for this test
 [ ] No speculative features added
 ```

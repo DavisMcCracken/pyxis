@@ -9,7 +9,7 @@ Scaffold a project that passes the verify loop green before handover. The base r
 
 ## 1. Resolve decisions (lightweight — not a full grill)
 
-Ask one at a time, each with a recommended default. Skip any question the user's request already answers. If the user says "defaults" or "just set it up", take all defaults silently and proceed.
+Infer answered decisions from the request. If name and kind are clear and no runtime dependency is mentioned, use no runtime dependencies and proceed without confirmation. Use the current working directory as the project parent unless the user specifies another location or that would overwrite an existing project.
 
 1. **Name** — package name (snake_case importable). Default: derive from the user's description.
 2. **Kind** — what is it?
@@ -40,8 +40,18 @@ Run the full loop from `AGENTS.md`:
 uv run ruff check --fix && uv run ruff format && uv run ty check && uv run pytest
 ```
 
-All four must pass. Fix anything red before handing over — the user receives a working repo, not a TODO list. Offer (don't auto-run) an initial commit.
+All four must pass. Fix anything red before continuing — the user receives a working repo, not a TODO list.
 
-## 4. Hand over
+## 4. Implement requested behavior
 
-Report: tree of what was created, the verify-loop result, and next steps — `uv add` real dependencies, trim `AGENTS.md` sections that don't fit this project, start the first feature test-first (the `/tdd` skill fits here).
+If the request includes product behavior, a green scaffold is not done:
+
+1. Continue with the `tdd` tracer-bullet loop: one behavior test, valid RED, minimal implementation.
+2. Replace the generated smoke test once real behavior coverage exists.
+3. Run the full verify loop again.
+
+Do not hand over requested behavior covered only by an import, `hasattr`, or callability test.
+
+## 5. Hand over
+
+Report: tree of what was created, the verify-loop result, and next steps — `uv add` real dependencies, trim `AGENTS.md` sections that don't fit this project, and offer (don't auto-run) an initial commit.

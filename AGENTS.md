@@ -11,16 +11,17 @@ Template: copy into each repo, trim or extend to fit the project.
 - Single-file scripts declare dependencies inline via PEP 723 (`# /// script`); run with `uv run script.py`.
 - All tool config (ruff, ty, pytest) lives in `pyproject.toml` — single source of truth.
 - Ruff lint: default rules plus `I`, `UP`, `B`, `SIM`, `RUF`. Leave line length to the formatter — don't enable the full `E` class.
-- After every change set, run the verify loop (lint-fix before format — fixes can produce unformatted code):
+- After each change set and before handoff, run the verify loop (lint-fix before format — fixes can produce unformatted code):
   `uv run ruff check --fix && uv run ruff format && uv run ty check && uv run pytest`
 - Git hooks run via `prek` (config in `.pre-commit-config.yaml`; `prek install` once per clone). Fix hook failures; never bypass with `--no-verify`.
 
 ## Workflow
 
-- Behavior change or new feature: write the failing test first, then implement.
+- Behavior change or bug fix (including a new function, CLI flag, option, endpoint, output format, or error behavior): before editing production code, write one test and run it. RED means the intended test collected and executed, then failed for the missing or incorrect behavior; import, collection, syntax, fixture, and unrelated setup failures do not count. No exceptions.
+- A new-project scaffold may reach green first, but requested product behavior still follows the rule above. A smoke, import, `hasattr`, or callability test does not count as behavior coverage.
 - One test -> minimal implementation -> repeat. Don't batch-write all tests upfront — bulk tests encode imagined behavior, not actual behavior.
-- Bug or regression: always reproduce with a failing test before fixing. No exceptions.
-- Exploratory spike or throwaway script: tests optional, never merge it. Name it `spike_*.py` with a `THROWAWAY` header stating the question probed; record the verdict before moving on.
+- Bug or regression: keep the reproducing test. If the fix intentionally changes multiple public operations or observable branches, assert each; do not test internal paths merely because they were edited.
+- Exploratory spike or throwaway script: tests optional, never merge it. Name it `spike_*.py` with a `THROWAWAY` header stating the question; run it, record the verdict, then delete it before handoff unless the user asks to keep it.
 - Non-trivial design decision (new module, schema, public API, algorithm choice): state 2–3 candidate approaches with trade-offs, pick one, then implement. Skip for routine edits.
 
 ## Testing

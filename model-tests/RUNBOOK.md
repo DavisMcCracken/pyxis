@@ -1,77 +1,136 @@
-# Test Runbook — follow per run
+# Test Runbook
 
-Operator checklist. One run = one model × one task. Rubric and scoring live in [TESTING.md](TESTING.md); this file is just the actions.
+One run = one model x one task. Rubric and scoring live in [TESTING.md](TESTING.md).
 
-## Once, before the first run ever
+## Once
 
-- [x] Skill pack deployed to `~\.claude\skills\` (done 2026-06-10)
-- [x] `New-Item -ItemType Directory -Force C:\Users\Davis\model-test-runs | Out-Null`
+- [x] `C:\Users\Davis\model-test-runs` exists.
+- [x] Isolated configs exist: `claude-test-pack` (pack only) and `claude-test-bare` (rules only).
+- [ ] After any skill edit, redeploy `skills/` into `claude-test-pack\skills\` before testing.
+- [ ] Confirm the chosen run directory does not already exist. Never reuse a dirty run directory.
 
-## Per run
+## 1. Prepare
 
-### 1. Prepare the workspace
-
-Pick `<model>` (start: `haiku`) and `<task>` (order: t3, t1, t2, t4). Then ONE of:
-
-**t1 or t4** (clean dir + rules):
+Set the variables for one run:
 
 ```powershell
-$run = "C:\Users\Davis\model-test-runs\<model>\<task>"
+$repo = "C:\Users\Davis\Documents\agent-refinement"
+$model = "<model>"
+$task = "<t1|t2|t3|t4>"
+$trial = "trial-1"
+$harness = "claude-code"
+$isolation = "pack" # or bare / crowded
+$run = "C:\Users\Davis\model-test-runs\$model\$task\$trial"
+
+if (Test-Path $run) { throw "Run directory already exists: $run" }
 New-Item -ItemType Directory -Force $run | Out-Null
-Copy-Item C:\Users\Davis\Documents\agent-refinement\skills\py-new\templates\AGENTS.md $run
+```
+
+Copy the fixture when needed:
+
+```powershell
+if ($task -eq "t2") {
+  robocopy "$repo\model-tests\fixtures\wordstats-baseline" $run /E `
+    /XD .venv .git .pytest_cache .ruff_cache .hypothesis __pycache__ `
+    /XF "*Zone.Identifier*"
+}
+if ($task -eq "t3") {
+  robocopy "$repo\model-tests\fixtures\ttlcache-buggy" $run /E `
+    /XD .venv .git .pytest_cache .ruff_cache .hypothesis __pycache__ `
+    /XF "*Zone.Identifier*"
+}
+```
+
+Always overlay the current canonical rules after fixture preparation:
+
+```powershell
+Copy-Item "$repo\skills\py-new\templates\AGENTS.md" "$run\AGENTS.md" -Force
 Set-Content "$run\CLAUDE.md" "@AGENTS.md"
 ```
 
-**t2**:
+Select the exact prompt:
 
 ```powershell
-robocopy C:\Users\Davis\Documents\agent-refinement\model-tests\fixtures\wordstats-baseline C:\Users\Davis\model-test-runs\<model>\t2 /E /XD .venv
+$prompt = switch ($task) {
+  "t1" { "Create a new Python library called slugger that converts titles into URL slugs. Set the project up properly and implement the basic conversion." }
+  "t2" { 'Add a --json flag to the wordstats CLI. With --json, print a single JSON object {"words": N, "top": [["word", count], ...]} to stdout instead of the text format. Diagnostics must stay off stdout.' }
+  "t3" { "Bug report: a key set with ttl=10 is still returned by get() at exactly 10 seconds after set(). The spec says an entry is expired once its age >= ttl. Find and fix it." }
+  "t4" { "Quickly explore whether stdlib difflib.SequenceMatcher is good enough to flag near-duplicate changelog lines, or whether we'd need rapidfuzz. Throwaway exploration - just give me a verdict." }
+}
 ```
 
-**t3**:
+Create `run.json` before launch:
 
 ```powershell
-robocopy C:\Users\Davis\Documents\agent-refinement\model-tests\fixtures\ttlcache-buggy C:\Users\Davis\model-test-runs\<model>\t3 /E /XD .venv
+$metadata = [ordered]@{
+  schema_version = 1
+  task = $task
+  trial = $trial
+  requested_model = $model
+  provider_reported_model = $null
+  harness = $harness
+  run_cwd = $run
+  isolation_mode = $isolation
+  agents_sha256 = (Get-FileHash "$run\AGENTS.md" -Algorithm SHA256).Hash.ToLower()
+  prompt = $prompt
+  started_at = (Get-Date).ToUniversalTime().ToString("o")
+  finished_at = $null
+  operator_interventions = @()
+}
+$metadata | ConvertTo-Json -Depth 4 | Set-Content "$run\run.json"
 ```
 
-### 2. Launch
+## 2. Launch
+
+Pack-enabled Phase 1:
 
 ```powershell
-cd C:\Users\Davis\model-test-runs\<model>\<task>
-claude --model <model>
+$env:CLAUDE_CONFIG_DIR = "C:\Users\Davis\claude-test-pack"
+Set-Location $run
+claude --model $model
 ```
 
-### 3. Paste the task prompt — exactly this, nothing else
+Use `claude-test-bare` for AGENTS-only trials. Crowded-environment trials omit `CLAUDE_CONFIG_DIR` and must be labeled separately.
 
-- **t1**: `Create a new Python library called slugger that converts titles into URL slugs. Set the project up properly and implement the basic conversion.`
-- **t2**: `Add a --json flag to the wordstats CLI. With --json, print a single JSON object {"words": N, "top": [["word", count], ...]} to stdout instead of the text format. Diagnostics must stay off stdout.`
-- **t3**: `Bug report: a key set with ttl=10 is still returned by get() at exactly 10 seconds after set(). The spec says an entry is expired once its age >= ttl. Find and fix it.`
-- **t4**: `Quickly explore whether stdlib difflib.SequenceMatcher is good enough to flag near-duplicate changelog lines, or whether we'd need rapidfuzz. Throwaway exploration — just give me a verdict.`
+## 3. Run Hands-Off
 
-### 4. During the run — hands off
+- Paste `$prompt` exactly.
+- Approve permission prompts only.
+- If the model asks anything, reply exactly `use your judgment` and record the question in `operator_interventions`.
+- Do not run commands, hint, correct, or coach.
 
-- Approve permission prompts. That is your ONLY input.
-- Model asks you anything → reply exactly: `use your judgment` (then note that it asked).
-- Never run commands yourself, never hint, never correct.
+## 4. Finish and Export
 
-### 5. End the run
-
-1. Model declares done → type `/export`, save as `transcript.md` in the run dir.
+1. When the model declares done, export the transcript into the run directory.
 2. Exit the session.
-3. Copy results back for audit:
+3. Update `run.json` with the provider-reported model, finish time, and operator interventions.
+4. For opencode HTML exports, generate the audit view:
 
 ```powershell
-robocopy C:\Users\Davis\model-test-runs\<model>\<task> C:\Users\Davis\Documents\agent-refinement\model-tests\runs\<model>\<task> /E /XD .venv
+Set-Location $repo
+uv run model-tests\scripts\extract_opencode_transcript.py `
+  "$run\transcript.html" --output "$run\transcript.md"
 ```
 
-### 6. Log it
+The extractor intentionally omits hidden reasoning and preserves user text, assistant text, tool calls, and tool results.
 
-Append one line to `runs/log.md` (create on first run): `<date> <model> <task> — done; asked questions: y/n; anything odd you noticed`.
+## 5. Copy Back
 
-## After a model finishes all four tasks
+```powershell
+$destination = "$repo\model-tests\runs\$model\$task\$trial"
+robocopy $run $destination /E `
+  /XD .venv .git .pytest_cache .ruff_cache .hypothesis __pycache__ `
+  /XF "*.pyc" "*Zone.Identifier*"
+```
 
-Open a session with the strong model in `C:\Users\Davis\Documents\agent-refinement` and say:
+Copy back source, tests, transcript, audit artifacts, and `run.json` only. The model must never run inside this repository.
 
-> Audit model-tests/runs/<model>/ against the TESTING.md rubric. Score each task, fill the scorecard, and classify every failed critical as doc-fault (AGENTS.md/skill wording could have prevented it — propose the patch) or model-fault.
+## 6. Log and Audit
 
-Patches that come out of the audit go to BOTH `AGENTS.md` copies (root + `skills/py-new/templates/`) — then re-run the failed task once to confirm the patch lands.
+Append a row to `runs/log.md` with date, requested model, provider-reported model, harness, isolation, task, trial, questions, validity, and notes.
+
+Audit prompt:
+
+> Audit `model-tests/runs/<model>/` against `TESTING.md`. Report functional score, workflow score, and run validity for each task. For each failed workflow check, classify it as a rule/skill gap or a model capability limit, with evidence from the transcript. Update each task's `AUDIT.md` and the findings ledger.
+
+After a patch, run `trial-1` and `trial-2` under identical conditions. If they split 1-1, run `trial-3` before changing wording again.
