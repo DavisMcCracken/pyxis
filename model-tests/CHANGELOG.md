@@ -63,3 +63,9 @@
 - Extended the runbook's `run.json` recipe with `repo_commit`, `skills_hash_root`, `skills_tree_sha256`, and `claude_config_dir` so future runs preserve both rule and skill provenance.
 - Updated the runbook to launch from the same `claude_config_dir` recorded in `run.json`.
 - Corrected stale changelog wording around the run-log path, pack/config metadata, and transcript-extractor test count.
+
+## 2026-06-20 — Roadmap status cleanup
+
+- Marked [REVISED-PLAN.md](REVISED-PLAN.md) as superseded historical rationale rather than an active hold.
+- Marked [REVISED-PLAN-SECOND-REVIEW.md](REVISED-PLAN-SECOND-REVIEW.md) as implemented with validation pending.
+- Clarified that the active roadmap is now the F1-F4 validation matrix in [FINDINGS.md](FINDINGS.md) and [RUNBOOK.md](RUNBOOK.md).

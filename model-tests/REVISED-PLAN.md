@@ -2,7 +2,8 @@
 
 Date: 2026-06-15. Author: Opus 4.8.
 Inputs: [PATCH-REVIEW.md](PATCH-REVIEW.md) (mine), [INDEPENDENT-RECOMMENDATIONS.md](INDEPENDENT-RECOMMENDATIONS.md) (independent), [FINDINGS.md](FINDINGS.md), the 12 per-run audits, and the actual `AGENTS.md` / `py-new` / `tdd` / `diagnose` sources.
-**Status: proposal only. Nothing applied. HOLD remains in force.**
+
+**Status as of 2026-06-20: superseded / implemented.** This was the first synthesis plan. The implementation-ready revision is [REVISED-PLAN-SECOND-REVIEW.md](REVISED-PLAN-SECOND-REVIEW.md). The core patch landed in PR #1 / commit `08b5463`; the audit-provenance follow-up landed in PR #3 / commit `cbda9bd`. Treat this file as historical design rationale, not the current roadmap. Current remaining work is empirical validation of F1-F4 in [FINDINGS.md](FINDINGS.md) using [RUNBOOK.md](RUNBOOK.md).
 
 ## Design rule this plan is built on (Matt Pocock split)
 
