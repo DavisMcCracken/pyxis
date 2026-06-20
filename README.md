@@ -8,6 +8,7 @@ Workshop for a Python agent workflow: an `AGENTS.md` rule base plus a matching s
 |---|---|
 | [AGENTS.md](AGENTS.md) | The rule base — live copy governing this repo. Canonical template: `skills/py-new/templates/AGENTS.md` (what `/py-new` stamps into new repos). Keep the two in sync. |
 | [CLAUDE.md](CLAUDE.md) | One line: `@AGENTS.md` — Claude Code reads the same rules. |
+| [PROJECT-STATUS.md](PROJECT-STATUS.md) | Current stable baseline, verification commands, archive locations, and active validation roadmap. |
 | [skills/](skills/) | The skill pack: `py-new`, `grill-me`, `tdd`, `diagnose`, `improve-codebase-architecture`, `_shared/`. Deploy + provenance: [skills/README.md](skills/README.md). |
 | [examples/](examples/) | Reference projects built under the rules: `wordstats` (lib+CLI, TDD), `ttlcache` (clock seam, regression drill), `spike_dedupe.py` (throwaway tier). |
 | [model-tests/](model-tests/) | Battery for testing how well a model follows the workflow: fixtures, rubric, scorecard. See [model-tests/TESTING.md](model-tests/TESTING.md). |
