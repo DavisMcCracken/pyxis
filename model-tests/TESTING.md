@@ -6,7 +6,7 @@ Measures functional results and workflow compliance under a recorded harness. Fo
 
 1. **Run outside this repository.** Use a path such as `C:\Users\Davis\model-test-runs\<model>\<task>`. A model that can read this repo, reference solutions, other runs, or undeclared skills is contaminated.
 2. Copy the task fixture into the clean run directory. Then overlay the current canonical `skills/py-new/templates/AGENTS.md`; do not rely on the fixture's stored snapshot.
-3. Record `run.json` before launch: requested model, harness, cwd, isolation mode, AGENTS hash, prompt, start time, and operator interventions. Add provider-reported model and finish time after the run.
+3. Record `run.json` before launch: requested model, harness, cwd, isolation mode, repo commit, AGENTS hash, skill-tree hash/root, Claude config directory, prompt, start time, and operator interventions. Add provider-reported model and finish time after the run.
 4. **Phase 1 default:** use an isolated config. `claude-test-pack` contains only this skill pack; `claude-test-bare` contains no skills. Pack auto-triggering is expected and scored.
 5. Launch from the run directory, fresh session per task, and paste the prompt verbatim. No coaching. If the model asks a question, answer exactly `use your judgment` and record it.
 6. Approve permission prompts only. When the model declares done, export the transcript and close the session.
