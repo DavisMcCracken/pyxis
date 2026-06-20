@@ -24,7 +24,7 @@
 - Split scoring into functional correctness and workflow adherence.
 - Added a separate validity label so contaminated or incomplete runs cannot pass silently.
 - Required the canonical `AGENTS.md` overlay for every run.
-- Added `run.json` metadata for requested model, provider-reported model, harness, isolation, prompt, pack, rule hash, timestamps, and interventions.
+- Added `run.json` metadata for requested model, provider-reported model, harness, isolation, prompt, rule hash, timestamps, and interventions.
 - Added copy exclusions for VCS, environment, cache, and harness artifacts.
 - Added repeated-trial guidance for noisy model outcomes.
 - Added explicit trial identifiers and fail-if-exists run directories so repeated trials cannot overwrite each other.
@@ -37,7 +37,7 @@
 
 ### Records
 
-- Expanded `runs/log.md` to separate requested and provider-reported models, harness, isolation, and validity.
+- Added a committed run-log format separating requested and provider-reported models, harness, isolation, and validity.
 - Marked historical in-repo opencode runs as contaminated rather than directly comparable.
 - Updated `FINDINGS.md` to distinguish implemented patches from validation still required.
 
@@ -49,10 +49,17 @@
 
 ### Validation
 
-- Transcript extractor: Ruff lint/format clean, `ty` clean, 2 tests passed, and real Deepseek and big-pickle exports rendered tool events without hidden reasoning.
+- Transcript extractor: Ruff lint/format clean, `ty` clean, 5 tests passed, and real Deepseek and big-pickle exports rendered tool events without hidden reasoning.
 - Root/template `AGENTS.md`: byte-identical SHA-256 `6ECBAE38C34FB186A011ACCE77BCFBD5CE56FFB2EFFDD67B032D43A34E161CD9`.
 - `examples/ttlcache`: full verify loop passed, including 7 tests.
 - `examples/wordstats`: full verify loop passed, including 19 tests.
 - Isolated pack deployment: revised `tdd`, `diagnose`, `py-new`, and canonical AGENTS template copied to `C:\Users\Davis\claude-test-pack\skills` and hash-checked.
 - Skill structure: `tdd`, `diagnose`, and `py-new` all passed the `skill-creator` `quick_validate.py` check.
 - Empirical acceptance matrix: not run in this change set; it requires interactive model sessions. Use the two-trial conditions in `RUNBOOK.md` and `REVISED-PLAN-SECOND-REVIEW.md` before marking F1-F4 validated.
+
+## 2026-06-18 — Pre-ship audit-record fixes
+
+- Added [RUNS-LOG.md](RUNS-LOG.md) as the committed run index; `model-tests/runs/` remains ignored for bulky transcripts, generated projects, and caches.
+- Extended the runbook's `run.json` recipe with `repo_commit`, `skills_hash_root`, `skills_tree_sha256`, and `claude_config_dir` so future runs preserve both rule and skill provenance.
+- Updated the runbook to launch from the same `claude_config_dir` recorded in `run.json`.
+- Corrected stale changelog wording around the run-log path, pack/config metadata, and transcript-extractor test count.
