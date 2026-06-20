@@ -4,7 +4,7 @@ Date: 2026-06-15.
 
 Scope: reviewed `REVISED-PLAN.md` against the model-test evidence, current `AGENTS.md`, `py-new`, `tdd`, `diagnose`, `skills/README.md`, and Matt Pocock's current source material for the same skills.
 
-This is a proposal only. It does not apply the patch.
+**Status as of 2026-06-20: implemented, validation pending.** The recommended implementation patch landed in PR #1 / commit `08b5463`; the audit-record/provenance follow-up landed in PR #3 / commit `cbda9bd`. Keep this file as the design and acceptance reference. The active roadmap is now the validation matrix in this document plus the `validation pending` rows in [FINDINGS.md](FINDINGS.md).
 
 ## Verdict
 
