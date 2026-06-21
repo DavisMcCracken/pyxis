@@ -16,3 +16,5 @@ Durable index of model-test runs. Bulky per-run artifacts live under `model-test
 | 2026-06-14 | big-pickle | deepseek-v4-flash | opencode/pi | in-repo | t2 | legacy-1 | none | contaminated | Provider-reported model differs from the requested alias. |
 | 2026-06-14 | big-pickle | deepseek-v4-flash | opencode/pi | in-repo | t3 | legacy-1 | none | contaminated | Provider-reported model differs from the requested alias. |
 | 2026-06-14 | big-pickle | deepseek-v4-flash | opencode/pi | in-repo | t4 | legacy-1 | none | contaminated | Provider-reported model differs from the requested alias. |
+| 2026-06-20 | haiku | claude-haiku-4-5-20251001 | Claude Code print | skill-less | t2 | trial-1 | none | valid | Issue #6 validation: wrote T2 behavior test first, observed valid RED, implemented JSON output, and all verification components passed. |
+| 2026-06-20 | haiku | claude-haiku-4-5-20251001 | Claude Code print | skill-less | t2 | trial-2 | none | valid | Issue #6 validation: wrote T2 behavior test first, observed valid RED, implemented JSON output, and ran full verify loop green. |
