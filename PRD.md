@@ -2,8 +2,8 @@
 
 Status: Working PRD
 Owner: Davis McCracken
-Last updated: 2026-06-20
-Tracking issues: #4, #11
+Last updated: 2026-06-21
+Tracking issues: #4, #11, #17
 
 ## 1. Summary
 
@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: ready to execute. Validation issues #6-#10 are open.
+Status: in progress. Issues #6, #7, and #8 are complete; #9, #10, and #14 remain open.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -124,11 +124,12 @@ Acceptance criteria:
 
 Tracking issues:
 
-- #6 Validate AGENTS-only T2 behavior.
-- #7 Validate pack-enabled T2 `tdd` trigger/procedure.
-- #8 Validate pack-enabled T1 `py-new` handoff.
-- #9 Validate T3 regression closure.
+- #6 Validate AGENTS-only T2 behavior — complete.
+- #7 Validate pack-enabled T2 `tdd` trigger/procedure — complete, with #14 follow-up for explicit skill-trigger evidence.
+- #8 Validate pack-enabled T1 `py-new` handoff — complete.
+- #9 Validate T3 regression closure — next held-constant validation.
 - #10 Summarize validation results and update ledgers.
+- #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
 
 ### Phase 2 — Workflow hardening
 
@@ -139,7 +140,8 @@ Potential work, only if supported by validation evidence:
 - tighten any rule/skill wording that fails validation,
 - add a small issue/PR template set if repeated PRs show missing information,
 - add a lightweight validation checklist script for repository invariants,
-- improve operator ergonomics in `RUNBOOK.md` without changing the test protocol.
+- improve operator ergonomics in `RUNBOOK.md` without changing the test protocol,
+- set up and document a clean OpenCode model-test harness in #17 after Phase 1 is summarized.
 
 ### Phase 3 — New features
 
@@ -289,10 +291,11 @@ A change is not ready if it:
 
 ## 11. Immediate next action
 
-Execute the Phase 1 validation issues before any new feature work:
+Finish the remaining Phase 1 validation work before any new feature work:
 
-1. #6 Validate AGENTS-only T2 behavior.
-2. #7 Validate pack-enabled T2 `tdd` trigger/procedure.
-3. #8 Validate pack-enabled T1 `py-new` handoff.
-4. #9 Validate T3 regression closure.
-5. #10 Summarize validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
+1. #9 Validate T3 regression closure under a held-constant harness.
+2. #10 Summarize Phase 1 validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
+3. #14 Resolve or precisely defer Claude Code `tdd` skill-trigger evidence.
+4. #17 Set up and document a clean OpenCode model-test harness after Phase 1 is summarized.
+
+Completed Phase 1 validation: #6, #7, and #8.

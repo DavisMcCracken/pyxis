@@ -1,7 +1,7 @@
 # Project Status
 
-Status date: 2026-06-20
-Latest verified PRD baseline commit: `91dd4e8`
+Status date: 2026-06-21
+Latest verified PRD baseline commit: `2a29556`
 
 ## Stable usable state
 
@@ -45,7 +45,7 @@ uv run ty check
 uv run pytest -q
 ```
 
-Latest full audit result after PR #5 merged:
+Latest full audit result after PR #16 merged:
 
 - `model-tests`: 5 tests passed; ruff, format check, and ty passed.
 - `examples/wordstats`: 19 tests passed; ruff, format check, and ty passed.
@@ -58,28 +58,33 @@ Latest full audit result after PR #5 merged:
 
 No new feature work is planned before validation. Future feature development should start from GitHub issues and use isolated branches or worktrees after Phase 1 is complete or explicitly waived in PRD.md.
 
-The remaining work is empirical validation of the already-implemented workflow/rule changes:
+The remaining Phase 1 work is empirical validation of the already-implemented workflow/rule changes:
 
 - See `model-tests/FINDINGS.md` for F1-F4 rows marked `validation pending`.
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for the validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
 - See `PRD.md` for the issue -> branch -> PR workflow and phase roadmap.
 
-Open validation issues:
+Open validation / follow-up issues:
 
-1. #6 Validate AGENTS-only T2 behavior.
-2. #7 Validate pack-enabled T2 `tdd` trigger/procedure.
-3. #8 Validate pack-enabled T1 `py-new` handoff.
-4. #9 Validate T3 regression closure under a held-constant harness.
-5. #10 Summarize validation results and update ledgers.
+1. #9 Validate T3 regression closure under a held-constant harness.
+2. #10 Summarize validation results and update ledgers.
+3. #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
+4. #17 Set up clean OpenCode model-test harness after Phase 1 summary.
 
 Recommended next validation sequence:
 
-1. AGENTS-only T2 x2.
-2. Pack-enabled T2 x2.
-3. Pack-enabled T1 x2.
-4. T3 x2 under a held-constant harness.
-5. If any pair splits 1-1, run a third trial before changing wording.
+1. T3 x2 under a held-constant harness (#9).
+2. If the pair splits 1-1, run a third trial before changing wording.
+3. Summarize Phase 1 and update ledgers (#10).
+4. Resolve or precisely defer the `tdd` skill-trigger evidence question (#14).
+5. After Phase 1 is summarized, set up and document a clean OpenCode harness (#17).
+
+Completed Phase 1 validation:
+
+- #6 AGENTS-only T2 x2: validated.
+- #7 Pack-enabled T2 x2: behavior validated; explicit `tdd` trigger evidence remains #14.
+- #8 Pack-enabled T1 x2: `py-new` handoff validated.
 
 ## Do not confuse with current work
 
