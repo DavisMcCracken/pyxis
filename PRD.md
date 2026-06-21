@@ -291,10 +291,11 @@ A change is not ready if it:
 
 ## 11. Immediate next action
 
-Execute the Phase 1 validation issues before any new feature work:
+Finish the remaining Phase 1 validation work before any new feature work:
 
-1. #6 Validate AGENTS-only T2 behavior.
-2. #7 Validate pack-enabled T2 `tdd` trigger/procedure.
-3. #8 Validate pack-enabled T1 `py-new` handoff.
-4. #9 Validate T3 regression closure.
-5. #10 Summarize validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
+1. #9 Validate T3 regression closure under a held-constant harness.
+2. #10 Summarize Phase 1 validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
+3. #14 Resolve or precisely defer Claude Code `tdd` skill-trigger evidence.
+4. #17 Set up and document a clean OpenCode model-test harness after Phase 1 is summarized.
+
+Completed Phase 1 validation: #6, #7, and #8.
