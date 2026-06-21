@@ -1,11 +1,11 @@
 # Project Status
 
 Status date: 2026-06-20
-Baseline commit before this note: `ad7cf05`
+Latest verified PRD baseline commit: `91dd4e8`
 
 ## Stable usable state
 
-The repository is in a stable docs-and-test baseline suitable for normal use of the rule base, skill pack, examples, and model-test harness.
+The repository is in a stable docs-and-test baseline suitable for normal use of the rule base, skill pack, examples, and model-test harness. PRD.md now governs the phase roadmap and issue -> branch -> PR workflow.
 
 Current stable scope:
 
@@ -45,7 +45,7 @@ uv run ty check
 uv run pytest -q
 ```
 
-Latest full audit result before this file was added:
+Latest full audit result after PR #5 merged:
 
 - `model-tests`: 5 tests passed; ruff, format check, and ty passed.
 - `examples/wordstats`: 19 tests passed; ruff, format check, and ty passed.
@@ -56,7 +56,7 @@ Latest full audit result before this file was added:
 
 ## Active roadmap
 
-No new feature work is planned before validation.
+No new feature work is planned before validation. Future feature development should start from GitHub issues and use isolated branches or worktrees after Phase 1 is complete or explicitly waived in PRD.md.
 
 The remaining work is empirical validation of the already-implemented workflow/rule changes:
 
@@ -64,6 +64,14 @@ The remaining work is empirical validation of the already-implemented workflow/r
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for the validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
 - See `PRD.md` for the issue -> branch -> PR workflow and phase roadmap.
+
+Open validation issues:
+
+1. #6 Validate AGENTS-only T2 behavior.
+2. #7 Validate pack-enabled T2 `tdd` trigger/procedure.
+3. #8 Validate pack-enabled T1 `py-new` handoff.
+4. #9 Validate T3 regression closure under a held-constant harness.
+5. #10 Summarize validation results and update ledgers.
 
 Recommended next validation sequence:
 
