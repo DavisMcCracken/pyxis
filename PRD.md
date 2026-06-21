@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: in progress. Issues #6, #7, and #8 are complete; #9, #10, and #14 remain open.
+Status: in progress. Issues #6, #7, and #8 are complete; #9 validation performed (F1 rule-text patch insufficient — follow-up required); #10, #14, and a new F1 follow-up issue remain open.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -111,7 +111,7 @@ Required validation matrix:
 | AGENTS-only behavior | isolated skill-less | T2 | 2 | Operational test-first wording works without skills |
 | `tdd` trigger/procedure | isolated pack-enabled | T2 | 2 | Feature prompt loads and follows `tdd` without unnecessary questions |
 | `py-new` handoff | isolated pack-enabled | T1 | 2 | Scaffold completes requested behavior with valid RED |
-| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage |
+| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. F1 follow-up required.** |
 
 If a pair splits 1-1, run a third trial before editing wording.
 
@@ -127,7 +127,7 @@ Tracking issues:
 - #6 Validate AGENTS-only T2 behavior — complete.
 - #7 Validate pack-enabled T2 `tdd` trigger/procedure — complete, with #14 follow-up for explicit skill-trigger evidence.
 - #8 Validate pack-enabled T1 `py-new` handoff — complete.
-- #9 Validate T3 regression closure — next held-constant validation.
+- #9 Validate T3 regression closure — validation performed 2026-06-21 (held-constant bare, haiku); F1 rule-text patch insufficient: both trials fixed `get()`→`>=` and `__len__`→`<` but wrote a boundary test for `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green). F1 moved to follow-up required; a new follow-up issue tracks pack-enabled T3 re-validation or stronger rule wording.
 - #10 Summarize validation results and update ledgers.
 - #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
 
@@ -293,9 +293,9 @@ A change is not ready if it:
 
 Finish the remaining Phase 1 validation work before any new feature work:
 
-1. #9 Validate T3 regression closure under a held-constant harness.
+1. #9 validation is complete with a negative result: F1 rule-text patch is insufficient (follow-up required). Decide the F1 follow-up: pack-enabled T3 re-validation (does the `diagnose`/`tdd` skill enforce multi-operation coverage?) or stronger rule wording with an explicit example.
 2. #10 Summarize Phase 1 validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
 3. #14 Resolve or precisely defer Claude Code `tdd` skill-trigger evidence.
 4. #17 Set up and document a clean OpenCode model-test harness after Phase 1 is summarized.
 
-Completed Phase 1 validation: #6, #7, and #8.
+Completed Phase 1 validation: #6, #7, #8, and #9 (performed; #9 result negative — F1 follow-up required).
