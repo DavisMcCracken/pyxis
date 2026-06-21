@@ -63,6 +63,7 @@ The remaining work is empirical validation of the already-implemented workflow/r
 - See `model-tests/FINDINGS.md` for F1-F4 rows marked `validation pending`.
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for the validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
+- See `PRD.md` for the issue -> branch -> PR workflow and phase roadmap.
 
 Recommended next validation sequence:
 
