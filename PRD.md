@@ -3,7 +3,7 @@
 Status: Working PRD
 Owner: Davis McCracken
 Last updated: 2026-06-20
-Tracking issue: #4
+Tracking issues: #4, #11
 
 ## 1. Summary
 
@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: next.
+Status: ready to execute. Validation issues #6-#10 are open.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -121,6 +121,14 @@ Acceptance criteria:
 - Every new run has `run.json` provenance per `RUNBOOK.md`.
 - `RUNS-LOG.md` records each run summary.
 - Bulky run artifacts remain ignored or archived.
+
+Tracking issues:
+
+- #6 Validate AGENTS-only T2 behavior.
+- #7 Validate pack-enabled T2 `tdd` trigger/procedure.
+- #8 Validate pack-enabled T1 `py-new` handoff.
+- #9 Validate T3 regression closure.
+- #10 Summarize validation results and update ledgers.
 
 ### Phase 2 — Workflow hardening
 
@@ -235,6 +243,32 @@ git pull --ff-only origin main
 git status --short --branch
 ```
 
+### 8.6 Development gates and worktrees
+
+Before Phase 1 is complete, work should stay limited to validation, status-sync, and stabilization tasks.
+
+After Phase 1, future development should follow this default operating model:
+
+1. Create or select a GitHub issue with clear acceptance criteria.
+2. Start from clean, current `main`.
+3. Use an isolated branch or worktree per issue when parallel work would otherwise dirty the main checkout.
+4. Keep each PR scoped to one issue or one coherent decision.
+5. Merge only after review and relevant verification.
+
+Recommended worktree pattern for parallel feature work:
+
+```bash
+git checkout main
+git pull --ff-only origin main
+git worktree add ../skills-issue-N -b feat/issue-N-short-name main
+```
+
+Remove the worktree after merge:
+
+```bash
+git worktree remove ../skills-issue-N
+```
+
 ## 9. Stability requirements
 
 A change is not ready if it:
@@ -249,16 +283,16 @@ A change is not ready if it:
 ## 10. Open questions
 
 1. Should GitHub issue templates be added now, or only after a few manual issues show a stable pattern?
-2. Should validation runs be managed as GitHub issues, one issue per validation condition?
+2. Should validation runs be managed as GitHub issues, one issue per validation condition? Answered for Phase 1: yes, issues #6-#10.
 3. Should `PROJECT-STATUS.md` be updated after every merge, or only after stabilization milestones?
 4. Should local archives under `/home/hermes/projects/archive/` eventually be copied to durable external storage?
 
 ## 11. Immediate next action
 
-Create validation issues for Phase 1 before any new feature work. Recommended issue breakdown:
+Execute the Phase 1 validation issues before any new feature work:
 
-1. Validate AGENTS-only T2 behavior.
-2. Validate pack-enabled T2 `tdd` trigger/procedure.
-3. Validate pack-enabled T1 `py-new` handoff.
-4. Validate T3 regression closure.
-5. Summarize validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
+1. #6 Validate AGENTS-only T2 behavior.
+2. #7 Validate pack-enabled T2 `tdd` trigger/procedure.
+3. #8 Validate pack-enabled T1 `py-new` handoff.
+4. #9 Validate T3 regression closure.
+5. #10 Summarize validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
