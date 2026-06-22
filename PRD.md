@@ -287,7 +287,7 @@ A change is not ready if it:
 ## 10. Open questions
 
 1. Should GitHub issue templates be added now, or only after a few manual issues show a stable pattern?
-2. Should validation runs be managed as GitHub issues, one issue per validation condition? Answered for Phase 1: yes, issues #6-#10.
+2. Should validation runs be managed as GitHub issues, one issue per validation condition? Answered for Phase 1: yes, issues #6-#10 with follow-up issues for unresolved validation findings.
 3. Should `PROJECT-STATUS.md` be updated after every merge, or only after stabilization milestones?
 4. Should local archives under `/home/hermes/projects/archive/` eventually be copied to durable external storage?
 
