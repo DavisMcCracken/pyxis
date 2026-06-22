@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: in progress. Issues #6, #7, and #8 are complete; #9 validation performed (F1 rule-text patch insufficient); #19 pack-enabled T3 follow-up also negative; #10, #14, and F1 wording follow-up #22 remain open.
+Status: in progress. Issues #6, #7, and #8 are complete; #9, #19, and #22 T3/F1 follow-ups all performed and negative (haiku does not generalize multi-operation coverage from rule text under bare, pack, or strengthened-wording variants); #10, #14, and F1 model-isolation follow-up #24 remain open.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -111,7 +111,7 @@ Required validation matrix:
 | AGENTS-only behavior | isolated skill-less | T2 | 2 | Operational test-first wording works without skills |
 | `tdd` trigger/procedure | isolated pack-enabled | T2 | 2 | Feature prompt loads and follows `tdd` without unnecessary questions |
 | `py-new` handoff | isolated pack-enabled | T1 | 2 | Scaffold completes requested behavior with valid RED |
-| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. #19 validation (2026-06-22, pack/haiku): pack visibility also did NOT achieve this; same W2 failure in both trials. F1 wording follow-up #22 required.** |
+| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. #19 validation (2026-06-22, pack/haiku): pack visibility also did NOT achieve this; same W2 failure in both trials. #22 validation (2026-06-22, bare/haiku, strengthened wording AGENTS_SHA `a1c50aee`): explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar also did NOT achieve this; both trials fixed both ops but tested `get()` only. F1 model-isolation follow-up #24 required (sonnet re-test).** |
 
 If a pair splits 1-1, run a third trial before editing wording.
 
@@ -131,7 +131,8 @@ Tracking issues:
 - #19 Validate pack-enabled T3 F1 follow-up — validation performed 2026-06-22 (Claude Code print, pack, haiku); pack visibility did not close F1: both trials repeated the same W2 failure. Follow-up #22 tracks stronger explicit multi-operation rule wording and re-validation.
 - #10 Summarize validation results and update ledgers.
 - #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
-- #22 Strengthen multi-operation rule wording and re-validate T3.
+- #22 Strengthen multi-operation rule wording and re-validate T3 — validation performed 2026-06-22 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`); negative: strengthened wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 — both trials fixed both `get()` and `__len__` but retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL). Follow-up #24 tracks a sonnet T3 re-test to isolate wording-vs-model.
+- #24 F1 follow-up: isolate wording-vs-model via sonnet T3 re-test.
 
 ### Phase 2 — Workflow hardening
 
@@ -295,9 +296,9 @@ A change is not ready if it:
 
 Finish the remaining Phase 1 validation work before any new feature work:
 
-1. #9 and #19 validation are complete with negative results: both rule text alone and pack visibility were insufficient for F1 on T3. Resolve #22 by strengthening the F1 rule with an explicit multi-operation example and re-validating T3.
+1. #9, #19, and #22 validation are complete with negative results: rule text alone, pack visibility, and strengthened explicit multi-operation wording were all insufficient for F1 on T3 (haiku). Resolve #24 by re-validating T3 under sonnet to isolate wording-vs-model.
 2. #10 Summarize Phase 1 validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
 3. #14 Resolve or precisely defer Claude Code `tdd` skill-trigger evidence.
 4. #17 Set up and document a clean OpenCode model-test harness after Phase 1 is summarized.
 
-Completed Phase 1 validation: #6, #7, #8, #9 (performed; negative), and #19 (performed; negative — F1 wording follow-up #22 required).
+Completed Phase 1 validation: #6, #7, #8, #9 (performed; negative), #19 (performed; negative), and #22 (performed; negative — F1 model-isolation follow-up #24 required).
