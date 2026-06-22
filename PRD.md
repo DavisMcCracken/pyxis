@@ -3,7 +3,7 @@
 Status: Working PRD
 Owner: Davis McCracken
 Last updated: 2026-06-22
-Tracking issues: #4, #11, #17, #19, #22
+Tracking issues: #4, #11, #17, #22
 
 ## 1. Summary
 
