@@ -1,6 +1,6 @@
 # Project Status
 
-Status date: 2026-06-21
+Status date: 2026-06-22
 Latest verified PRD baseline commit: `148dc4a`
 
 ## Stable usable state
@@ -62,20 +62,20 @@ No new feature work is planned before validation. Future feature development sho
 The remaining Phase 1 work is empirical validation of the already-implemented workflow/rule changes:
 
 - See `model-tests/FINDINGS.md` for F1-F4 rows marked `validation pending`.
-- See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for the validation matrix and acceptance criteria.
+- See `PRD.md` for the current validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
-- See `PRD.md` for the issue -> branch -> PR workflow and phase roadmap.
+- See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for historical implemented guidance behind the matrix.
 
 Open validation / follow-up issues:
 
-1. #19 F1 follow-up: T3 multi-operation coverage — pack-enabled re-validation or stronger rule wording.
+1. #22 F1 follow-up: strengthen multi-operation rule wording and re-validate T3.
 2. #10 Summarize validation results and update ledgers.
 3. #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
 4. #17 Set up clean OpenCode model-test harness after Phase 1 summary.
 
 Recommended next validation sequence:
 
-1. Decide the F1 follow-up (#19): pack-enabled T3 re-validation or stronger rule wording + bare re-validation.
+1. Resolve the F1 wording follow-up (#22): add an explicit multi-operation example, then re-validate T3.
 2. Summarize Phase 1 and update ledgers (#10).
 3. Resolve or precisely defer the `tdd` skill-trigger evidence question (#14).
 4. After Phase 1 is summarized, set up and document a clean OpenCode harness (#17).
@@ -85,7 +85,8 @@ Completed Phase 1 validation:
 - #6 AGENTS-only T2 x2: validated.
 - #7 Pack-enabled T2 x2: behavior validated; explicit `tdd` trigger evidence remains #14.
 - #8 Pack-enabled T1 x2: `py-new` handoff validated.
-- #9 T3 regression closure x2 (held-constant bare, haiku): validation performed; **negative result** — both trials fixed `get()` and `__len__` but guarded `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green). F1 rule-text patch insufficient → follow-up required (#19).
+- #9 T3 regression closure x2 (held-constant bare, haiku): validation performed; **negative result** — both trials fixed `get()` and `__len__` but guarded `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green). F1 rule-text patch insufficient.
+- #19 Pack-enabled T3 follow-up x2 (Claude Code print, haiku): validation performed; **negative result** — both trials repeated the same gap despite the skill pack being visible. Pack visibility did not close F1; follow-up #22 tracks explicit multi-operation rule wording and re-validation.
 
 ## Do not confuse with current work
 
