@@ -59,20 +59,16 @@ Latest full audit result after PR #16 merged:
 
 No new feature work is planned before validation. Future feature development should start from GitHub issues and use isolated branches or worktrees after Phase 1 is complete or explicitly waived in PRD.md.
 
-Phase 1 empirical validation is now summarized. The completed validation set supports the current rule wording for stronger Claude Code models, identifies haiku's T3 multi-operation gap as a model-selection limitation, and defines how future audits prove Claude Code skill invocation.
+Phase 1 empirical validation is now summarized. The completed validation set supports the current rule wording for stronger Claude Code models, identifies haiku's T3 multi-operation gap as a model-selection limitation, and defines how future audits prove Claude Code skill invocation. Clean OpenCode harness setup is documented for future calibrated runs.
 
 - See `model-tests/FINDINGS.md` for F1-F4 outcomes.
 - See `PRD.md` for the current validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for historical implemented guidance behind the matrix.
 
-Open follow-up issues:
+Open follow-up issues: none currently in the validation/harness sequence.
 
-1. #17 Set up clean OpenCode model-test harness after Phase 1 summary.
-
-Recommended next validation sequence:
-
-1. Set up and document a clean OpenCode harness (#17).
+Recommended next action: create a new issue before starting any calibrated OpenCode validation matrix or Phase 2 workflow-hardening feature.
 
 Completed Phase 1 validation:
 
@@ -85,6 +81,7 @@ Completed Phase 1 validation:
 - #24 Sonnet T3 model-isolation follow-up x2 (held-constant bare, sonnet, same AGENTS_SHA `a1c50aee`): validation performed; **positive result** — both trials retained boundary tests for `get()` and `__len__()`, full verify passed, and audit probes showed reverting either operation fails (W2 PASS). F1 wording is validated for sonnet; haiku T3 multi-operation coverage is a model-selection limitation, not a further wording gap.
 - #10 Phase 1 summary: validation outcomes recorded; F1-F4 have explicit statuses; RUNS-LOG is complete through #24.
 - #14 Claude Code skill-trigger evidence: validation performed; stream-json `Skill` tool-use events are required to prove invocation. Issue #7 had `tdd` availability but no `tdd` invocation event, so it remains behavior-valid rather than mechanism proof.
+- #17 Clean OpenCode harness setup: `/usr/local/bin/opencode` 1.17.9 verified; non-interactive smoke passed outside the repo; RUNBOOK documents JSON transcript capture, provenance fields, and the historical comparability caveat.
 
 ## Do not confuse with current work
 
