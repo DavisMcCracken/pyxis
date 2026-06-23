@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: in progress. Issues #6, #7, and #8 are complete; #9, #19, and #22 T3/F1 follow-ups all performed and negative (haiku does not generalize multi-operation coverage from rule text under bare, pack, or strengthened-wording variants); #10, #14, and F1 model-isolation follow-up #24 remain open.
+Status: in progress. Issues #6, #7, and #8 are complete; #9, #19, and #22 T3/F1 follow-ups all performed and negative for haiku; #24 sonnet model-isolation re-test passed, validating the strengthened wording for stronger models and classifying haiku's T3 multi-operation coverage gap as a model-selection limitation. #10 and #14 remain open.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -111,7 +111,7 @@ Required validation matrix:
 | AGENTS-only behavior | isolated skill-less | T2 | 2 | Operational test-first wording works without skills |
 | `tdd` trigger/procedure | isolated pack-enabled | T2 | 2 | Feature prompt loads and follows `tdd` without unnecessary questions |
 | `py-new` handoff | isolated pack-enabled | T1 | 2 | Scaffold completes requested behavior with valid RED |
-| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. #19 validation (2026-06-22, pack/haiku): pack visibility also did NOT achieve this; same W2 failure in both trials. #22 validation (2026-06-22, bare/haiku, strengthened wording AGENTS_SHA `a1c50aee`): explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar also did NOT achieve this; both trials fixed both ops but tested `get()` only. F1 model-isolation follow-up #24 required (sonnet re-test).** |
+| Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. #19 validation (2026-06-22, pack/haiku): pack visibility also did NOT achieve this; same W2 failure in both trials. #22 validation (2026-06-22, bare/haiku, strengthened wording AGENTS_SHA `a1c50aee`): explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar also did NOT achieve this for haiku. #24 validation (2026-06-23, bare/sonnet, same AGENTS_SHA): both trials guarded `get()` and `__len__()` and audit probes confirmed reverting either changed operation fails (`W2 PASS`, `W4 PASS`). F1 wording validated for sonnet; haiku remains model-selection limitation.** |
 
 If a pair splits 1-1, run a third trial before editing wording.
 
@@ -131,8 +131,8 @@ Tracking issues:
 - #19 Validate pack-enabled T3 F1 follow-up — validation performed 2026-06-22 (Claude Code print, pack, haiku); pack visibility did not close F1: both trials repeated the same W2 failure. Follow-up #22 tracks stronger explicit multi-operation rule wording and re-validation.
 - #10 Summarize validation results and update ledgers.
 - #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
-- #22 Strengthen multi-operation rule wording and re-validate T3 — validation performed 2026-06-22 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`); negative: strengthened wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 — both trials fixed both `get()` and `__len__` but retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL). Follow-up #24 tracks a sonnet T3 re-test to isolate wording-vs-model.
-- #24 F1 follow-up: isolate wording-vs-model via sonnet T3 re-test.
+- #22 Strengthen multi-operation rule wording and re-validate T3 — validation performed 2026-06-22 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`); negative for haiku: strengthened wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 — both trials fixed both `get()` and `__len__` but retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL).
+- #24 F1 follow-up: isolate wording-vs-model via sonnet T3 re-test — validation performed 2026-06-23 (held-constant bare, sonnet, same AGENTS_SHA); positive: both trials retained boundary tests for `get()` and `__len__()`, full verify passed, and audit probes showed reverting either operation fails (W2 PASS). F1 is a haiku model-selection limitation, not a further wording gap.
 
 ### Phase 2 — Workflow hardening
 
