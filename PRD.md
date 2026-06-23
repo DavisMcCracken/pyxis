@@ -269,6 +269,8 @@ After Phase 1, future development should follow this default operating model:
 4. Keep each PR scoped to one issue or one coherent decision.
 5. Merge only after review and relevant verification.
 
+For the maintained end-to-end workflow, including validation levels and dev repo → public distribution repo release flow, see `DEVELOPMENT.md`.
+
 Recommended worktree pattern for parallel feature work:
 
 ```bash
@@ -303,11 +305,11 @@ A change is not ready if it:
 
 ## 11. Immediate next action
 
-Finish the remaining Phase 1 validation work before any new feature work:
+Phase 1 validation is complete and summarized. The project is ready for a first skills-focused release path.
 
-1. #9, #19, and #22 validation are complete with negative results: rule text alone, pack visibility, and strengthened explicit multi-operation wording were all insufficient for F1 on T3 (haiku). Resolve #24 by re-validating T3 under sonnet to isolate wording-vs-model.
-2. #10 Summarize Phase 1 validation results and update `FINDINGS.md` / `PROJECT-STATUS.md`.
-3. #14 Resolve or precisely defer Claude Code `tdd` skill-trigger evidence.
-4. #17 Set up and document a clean OpenCode model-test harness after Phase 1 is summarized.
+Recommended next issue:
 
-Completed Phase 1 validation: #6, #7, #8, #9 (performed; negative), #19 (performed; negative), and #22 (performed; negative — F1 model-isolation follow-up #24 required).
+1. Prepare `v0.1.0` skills distribution via skills.sh / `npx skills`.
+2. Add any missing public-release basics, especially `LICENSE` and install instructions.
+3. Decide whether first release installs from this repo or from a separate product-only distribution repo.
+4. If using a separate public repo, sync product files by allowlist as described in `DEVELOPMENT.md`; do not copy and paste files by hand.

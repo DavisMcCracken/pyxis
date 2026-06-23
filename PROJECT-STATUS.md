@@ -65,10 +65,11 @@ Phase 1 empirical validation is now summarized. The completed validation set sup
 - See `PRD.md` for the current validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for historical implemented guidance behind the matrix.
+- See `DEVELOPMENT.md` for ongoing issue → branch → validation → PR workflow and dev repo → public distribution repo release flow.
 
 Open follow-up issues: none currently in the validation/harness sequence.
 
-Recommended next action: create a new issue before starting any calibrated OpenCode validation matrix or Phase 2 workflow-hardening feature.
+Recommended next action: create a release-prep issue for `v0.1.0` skills distribution via skills.sh / `npx skills`, or create a separate issue before starting any calibrated OpenCode validation matrix or Phase 2 workflow-hardening feature.
 
 Completed Phase 1 validation:
 
