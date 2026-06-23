@@ -59,22 +59,20 @@ Latest full audit result after PR #16 merged:
 
 No new feature work is planned before validation. Future feature development should start from GitHub issues and use isolated branches or worktrees after Phase 1 is complete or explicitly waived in PRD.md.
 
-Phase 1 empirical validation is now summarized. The completed validation set supports the current rule wording for stronger Claude Code models, identifies haiku's T3 multi-operation gap as a model-selection limitation, and leaves one evidence follow-up around `tdd` skill-trigger auditing.
+Phase 1 empirical validation is now summarized. The completed validation set supports the current rule wording for stronger Claude Code models, identifies haiku's T3 multi-operation gap as a model-selection limitation, and defines how future audits prove Claude Code skill invocation.
 
 - See `model-tests/FINDINGS.md` for F1-F4 outcomes.
 - See `PRD.md` for the current validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
 - See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for historical implemented guidance behind the matrix.
 
-Open validation / follow-up issues:
+Open follow-up issues:
 
-1. #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
-2. #17 Set up clean OpenCode model-test harness after Phase 1 summary.
+1. #17 Set up clean OpenCode model-test harness after Phase 1 summary.
 
 Recommended next validation sequence:
 
-1. Resolve or precisely defer the `tdd` skill-trigger evidence question (#14).
-2. Set up and document a clean OpenCode harness (#17).
+1. Set up and document a clean OpenCode harness (#17).
 
 Completed Phase 1 validation:
 
@@ -85,7 +83,8 @@ Completed Phase 1 validation:
 - #19 Pack-enabled T3 follow-up x2 (Claude Code print, haiku): validation performed; **negative result** — both trials repeated the same gap despite the skill pack being visible. Pack visibility did not close F1; follow-up #22 tracks explicit multi-operation rule wording and re-validation.
 - #22 Strengthened-wording T3 follow-up x2 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`): validation performed; **negative result** — both trials explicitly fixed both `get()` and `__len__` but again retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL). Strengthened rule wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 for haiku. Follow-up #24 tracks a sonnet T3 re-test to isolate wording-vs-model.
 - #24 Sonnet T3 model-isolation follow-up x2 (held-constant bare, sonnet, same AGENTS_SHA `a1c50aee`): validation performed; **positive result** — both trials retained boundary tests for `get()` and `__len__()`, full verify passed, and audit probes showed reverting either operation fails (W2 PASS). F1 wording is validated for sonnet; haiku T3 multi-operation coverage is a model-selection limitation, not a further wording gap.
-- #10 Phase 1 summary: validation outcomes recorded; F1-F4 have explicit statuses; RUNS-LOG is complete through #24; next work is #14, then #17.
+- #10 Phase 1 summary: validation outcomes recorded; F1-F4 have explicit statuses; RUNS-LOG is complete through #24.
+- #14 Claude Code skill-trigger evidence: validation performed; stream-json `Skill` tool-use events are required to prove invocation. Issue #7 had `tdd` availability but no `tdd` invocation event, so it remains behavior-valid rather than mechanism proof.
 
 ## Do not confuse with current work
 
