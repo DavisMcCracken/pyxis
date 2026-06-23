@@ -154,6 +154,12 @@ uv run model-tests\scripts\extract_opencode_transcript.py `
 
 The extractor intentionally omits hidden reasoning and preserves user text, assistant text, tool calls, and tool results.
 
+### Claude Code skill invocation evidence
+
+For stream-json transcripts, count a Claude Code skill as invoked only when the transcript contains an assistant `tool_use` event with `name: "Skill"` and `input.skill` equal to the expected skill name. The following `tool_result` usually says `Launching skill: <name>`, and Claude injects a synthetic user message containing the skill body.
+
+The `init` event's `skills` and `slash_commands` fields prove only that a skill was available. They do not prove auto-trigger or procedure use. Behavior that matches a skill also does not prove invocation without the `Skill` tool-use event.
+
 ## 5. Copy Back
 
 ```powershell
