@@ -180,3 +180,48 @@ Audit prompt:
 > Audit `model-tests/runs/<model>/` against `TESTING.md`. Report functional score, workflow score, and run validity for each task. For each failed workflow check, classify it as a rule/skill gap or a model capability limit, with evidence from the transcript. Update each task's `AUDIT.md` and the findings ledger.
 
 After a patch, run `trial-1` and `trial-2` under identical conditions. If they split 1-1, run `trial-3` before changing wording again.
+
+## 7. OpenCode clean harness
+
+OpenCode runs must follow the same isolation rule as Claude Code: run outside this repository, copy only the task fixture into a fresh run directory, overlay the current canonical `AGENTS.md`, record `run.json` before launch, and keep bulky artifacts out of git.
+
+Host baseline verified 2026-06-23:
+
+```bash
+which -a opencode     # /usr/local/bin/opencode
+opencode --version   # 1.17.9
+opencode auth list   # may show 0 local credentials; smoke test is the real non-interactive auth check
+```
+
+Available model aliases at setup time:
+
+```text
+opencode/big-pickle
+opencode/deepseek-v4-flash-free
+opencode/mimo-v2.5-free
+opencode/nemotron-3-ultra-free
+opencode/north-mini-code-free
+```
+
+Smoke test outside the repo:
+
+```bash
+mkdir -p /home/hermes/model-test-runs/opencode-smoke
+cd /home/hermes/model-test-runs/opencode-smoke
+opencode run 'Respond with exactly: OPENCODE_SMOKE_OK'
+opencode run --format json 'Respond with exactly: OPENCODE_SMOKE_OK' > opencode-smoke.jsonl
+```
+
+Expected plain output includes `OPENCODE_SMOKE_OK`; JSON output is newline-delimited events (`step_start`, `text`, `step_finish`) with `sessionID`, token counts, and cost. Capture both stdout/stderr or use `--format json` for transcript evidence.
+
+Recommended calibrated run command shape, after preparing the run directory and writing `run.json`:
+
+```bash
+cd "$run"
+opencode run --format json --model opencode/big-pickle "$prompt" \
+  > transcript.jsonl 2> opencode_stderr.log
+```
+
+Record in `run.json`: requested model alias, model shown in the plain banner or JSON/session metadata if available, exact command, cwd, isolation mode, transcript format/path, prompt, start/finish time, operator interventions, exit code, and any OpenCode version/binary details. If provider-reported model is not available beyond the requested alias, set it to `null` and say so in the audit notes.
+
+Do not compare new clean OpenCode results directly to historical contaminated in-repo OpenCode runs; mark those old runs as historical comparability caveats only.
