@@ -100,7 +100,7 @@ Acceptance criteria:
 
 ### Phase 1 — Empirical validation
 
-Status: in progress. Issues #6, #7, and #8 are complete; #9, #19, and #22 T3/F1 follow-ups all performed and negative for haiku; #24 sonnet model-isolation re-test passed, validating the strengthened wording for stronger models and classifying haiku's T3 multi-operation coverage gap as a model-selection limitation. #10 and #14 remain open.
+Status: summarized. Issues #6, #7, #8, #9, #19, #22, and #24 are complete; #10 records the Phase 1 summary; #14 remains the only Phase 1 evidence follow-up. The main outcome is that the current rule wording is validated for stronger Claude Code models, while haiku's T3 multi-operation coverage miss is a model-selection limitation.
 
 Goal: validate the already-implemented rule/skill changes before adding new features.
 
@@ -122,6 +122,15 @@ Acceptance criteria:
 - `RUNS-LOG.md` records each run summary.
 - Bulky run artifacts remain ignored or archived.
 
+Validation outcome summary:
+
+| Finding | Phase 1 outcome | Follow-up |
+|---|---|---|
+| F1 | Strengthened multi-operation coverage wording validated under sonnet T3 x2; haiku remains a model-selection limitation for this class. | No wording patch. Use stronger model or skill enforcement for high-risk multi-operation bug fixes. |
+| F2 | `py-new` handoff validated for T1; pack-enabled T2 behavior was test-first but explicit `tdd` skill-trigger evidence was absent. | #14 determines whether behavior-only evidence is sufficient or protocol wording must clarify skill invocation evidence. |
+| F3 | AGENTS-only T2 wording validated: haiku classified `--json` as a behavior change and wrote tests first. | None. |
+| F4 | RED-before-edit wording validated for haiku T2 x2. | None. |
+
 Tracking issues:
 
 - #6 Validate AGENTS-only T2 behavior — complete.
@@ -129,7 +138,7 @@ Tracking issues:
 - #8 Validate pack-enabled T1 `py-new` handoff — complete.
 - #9 Validate T3 regression closure — validation performed 2026-06-21 (held-constant bare, haiku); F1 rule-text patch insufficient: both trials fixed `get()`→`>=` and `__len__`→`<` but wrote a boundary test for `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green).
 - #19 Validate pack-enabled T3 F1 follow-up — validation performed 2026-06-22 (Claude Code print, pack, haiku); pack visibility did not close F1: both trials repeated the same W2 failure. Follow-up #22 tracks stronger explicit multi-operation rule wording and re-validation.
-- #10 Summarize validation results and update ledgers.
+- #10 Summarize validation results and update ledgers — performed 2026-06-23; F1-F4 outcomes summarized, RUNS-LOG complete through #24, and remaining follow-ups narrowed to #14 plus post-summary OpenCode harness work #17.
 - #14 Investigate Claude Code skill auto-trigger evidence for `tdd`.
 - #22 Strengthen multi-operation rule wording and re-validate T3 — validation performed 2026-06-22 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`); negative for haiku: strengthened wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 — both trials fixed both `get()` and `__len__` but retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL).
 - #24 F1 follow-up: isolate wording-vs-model via sonnet T3 re-test — validation performed 2026-06-23 (held-constant bare, sonnet, same AGENTS_SHA); positive: both trials retained boundary tests for `get()` and `__len__()`, full verify passed, and audit probes showed reverting either operation fails (W2 PASS). F1 is a haiku model-selection limitation, not a further wording gap.
