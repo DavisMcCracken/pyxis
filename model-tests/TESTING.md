@@ -23,7 +23,7 @@ Report two scores and one validity label per task:
 2. **Workflow score** - test order, vertical slices, retained coverage, and verification.
 3. **Run validity** - `valid`, `cross-harness`, or `contaminated`, with a short reason.
 
-Do not merge scores across harness types or validity labels. A failed prerequisite is a failed workflow check, not a vacuous pass or ratio-friendly N/A.
+Do not merge scores across harness types or validity labels. A failed prerequisite is a failed workflow check, not a vacuous pass or ratio-friendly N/A. Clean OpenCode runs are a separate harness from Claude Code and from historical contaminated OpenCode/opencode-pi runs.
 
 ## Valid RED
 

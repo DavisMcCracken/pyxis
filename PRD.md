@@ -145,7 +145,7 @@ Tracking issues:
 
 ### Phase 2 — Workflow hardening
 
-Status: proposed after Phase 1.
+Status: ready for new issue selection after Phase 1 summary and clean OpenCode harness setup.
 
 Potential work, only if supported by validation evidence:
 
@@ -153,7 +153,7 @@ Potential work, only if supported by validation evidence:
 - add a small issue/PR template set if repeated PRs show missing information,
 - add a lightweight validation checklist script for repository invariants,
 - improve operator ergonomics in `RUNBOOK.md` without changing the test protocol,
-- set up and document a clean OpenCode model-test harness in #17 after Phase 1 is summarized.
+- use the clean OpenCode harness documented by #17 for future calibrated runs, without comparing against historical contaminated OpenCode runs.
 
 ### Phase 3 — New features
 
