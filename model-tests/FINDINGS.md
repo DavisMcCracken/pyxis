@@ -2,7 +2,7 @@
 
 Cross-run aggregation. Per-run evidence lives in `runs/<model>/<task>/AUDIT.md`; this file tracks every finding to a resolution. Patch on pattern, not single instance — a watch item needs a second occurrence (or unambiguous severity) before it becomes a patch.
 
-Statuses: `watch` (logged, needs more evidence) → `patch-candidate` (evidence sufficient, patch drafted) → `patched <commit>` / `rejected <reason>`.
+Statuses: `watch` (logged, needs more evidence) → `patch-candidate` (evidence sufficient, patch drafted) → `patched <commit>` / `rejected <reason>` / `validated` / `follow-up required`.
 
 ## Rules findings (AGENTS.md / skills)
 
@@ -17,6 +17,8 @@ Statuses: `watch` (logged, needs more evidence) → `patch-candidate` (evidence 
 Note: F2's C3 sub-finding (T2 shipped stdout-purity correct but **unguarded** — no capsys test) is the same coverage-gap family as F1. Four coverage-gap data points now exist (F1 partial-path ×2 original, T2 no-guard, F1 `__len__` unguarded ×2 via issue #9). A third and fourth have appeared: consider a single consolidated "tests guard every intentionally changed public behavior path" line, or skill-based enforcement (see F1 follow-up and #14).
 
 Note (deepseek/t2, cross-harness): unlike haiku, deepseek **did guard** stdout purity (its tests parse `capsys.out` with `json.loads`), so the "no-guard" sub-finding remains haiku-specific — not a second occurrence. Its only T2 miss was the RED-ordering (F4). Because this harness has no skills, deepseek isolates the AGENTS.md *wording* as the sole lever: it confirms the rule-text patches (F3 examples + F4 RED-emphasis) are the portable fix, while the F2 skill-broadening helps only Claude Code. The F1 partial-path coverage gap now has **2 occurrences** across both models.
+
+Phase 1 summary: F1 is validated for wording under sonnet and remains a haiku model-selection limitation; F2 is mixed with #14 tracking explicit `tdd` skill-trigger evidence; F3 and F4 are validated. No broad rule or skill rewrite is bundled into the summary.
 
 ## Protocol findings (TESTING.md / RUNBOOK.md)
 
