@@ -36,6 +36,12 @@ Cross-references: `grill-me` -> `tdd` / `improve-codebase-architecture`; `tdd` -
 
 ## Deploy
 
-Copy the contents of this folder into `~/.claude/skills/` — whole tree, `_shared/` relative links depend on sibling placement.
+Preferred public install path, once the repo is published through skills.sh / `npx skills`:
+
+```bash
+npx skills add DavisMcCracken/skills --agent claude-code
+```
+
+For local/manual install, copy the contents of this folder into `~/.claude/skills/` — whole tree, `_shared/` relative links depend on sibling placement.
 
 Migrating from Matt Pocock's originals? Remove the superseded pieces first: `grill-with-docs/` (merged into `grill-me`) and the old `tdd` support files (`deep-modules.md`, `interface-design.md`, `mocking.md`, `refactoring.md`). His other skills coexist fine.

@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .hypothesis/
 .ruff_cache/
+.hermes/
 *.egg-info/
 dist/
 model-tests/runs/
