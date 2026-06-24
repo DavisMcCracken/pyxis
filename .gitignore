@@ -9,3 +9,4 @@ __pycache__/
 dist/
 model-tests/runs/
 .obsidian/
+.claude/settings.local.json

@@ -9,13 +9,13 @@ The repository is in a stable docs-and-test baseline suitable for normal use of 
 
 Current stable scope:
 
-- Root `AGENTS.md` and `skills/py-new/templates/AGENTS.md` are the canonical synchronized Python project rules.
-- `skills/` contains the deployable skill pack: `py-new`, `grill-me`, `tdd`, `diagnose`, `improve-codebase-architecture`, and `_shared` references.
+- Root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` are the canonical synchronized Python project rules.
+- `skills/` contains the deployable skill pack: `scaffold`, `interview`, `tdd`, `debug`, `refactor`, and `_shared` references.
 - `examples/wordstats` and `examples/ttlcache` are green reference projects.
 - `model-tests/` contains the model-test rubric, runbook, findings ledger, transcript extractor, and committed run index.
-- Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/hermes/projects/archive/skills-model-test-runs-2026-06-20`.
-- Active validation runs (issues #6-#9, #19, and #22) and reusable launch/audit helper scripts live under `/home/hermes/model-test-runs/`; each run dir has `run.json` provenance and a `transcript.jsonl`. This path is outside the repo and gitignored.
-- Stale branch tips were preserved in `/home/hermes/projects/archive/skills-stale-branches-2026-06-20.bundle` before branch cleanup.
+- Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/<you>/projects/archive/skills-model-test-runs-2026-06-20`.
+- Active validation runs (issues #6-#9, #19, and #22) and reusable launch/audit helper scripts live under `/home/<you>/model-test-runs/`; each run dir has `run.json` provenance and a `transcript.jsonl`. This path is outside the repo and gitignored.
+- Stale branch tips were preserved in `/home/<you>/projects/archive/skills-stale-branches-2026-06-20.bundle` before branch cleanup.
 
 ## Verification baseline
 
@@ -75,7 +75,7 @@ Completed Phase 1 validation:
 
 - #6 AGENTS-only T2 x2: validated.
 - #7 Pack-enabled T2 x2: behavior validated; explicit `tdd` trigger evidence remains #14.
-- #8 Pack-enabled T1 x2: `py-new` handoff validated.
+- #8 Pack-enabled T1 x2: `scaffold` handoff validated.
 - #9 T3 regression closure x2 (held-constant bare, haiku): validation performed; **negative result** — both trials fixed `get()` and `__len__` but guarded `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green). F1 rule-text patch insufficient.
 - #19 Pack-enabled T3 follow-up x2 (Claude Code print, haiku): validation performed; **negative result** — both trials repeated the same gap despite the skill pack being visible. Pack visibility did not close F1; follow-up #22 tracks explicit multi-operation rule wording and re-validation.
 - #22 Strengthened-wording T3 follow-up x2 (held-constant bare, haiku, AGENTS_SHA `a1c50aee`): validation performed; **negative result** — both trials explicitly fixed both `get()` and `__len__` but again retained only a `get()` boundary test, leaving `__len__()` unguarded (W2 FAIL). Strengthened rule wording (explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar) did not close F1 for haiku. Follow-up #24 tracks a sonnet T3 re-test to isolate wording-vs-model.

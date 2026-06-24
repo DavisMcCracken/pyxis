@@ -1,4 +1,4 @@
-# Product Requirements Document: agent-refinement / skills
+# Product Requirements Document: Pyxis
 
 Status: Working PRD
 Owner: Davis McCracken
@@ -7,7 +7,7 @@ Tracking issues: #4, #11, #17, #24
 
 ## 1. Summary
 
-`agent-refinement/skills` is a docs-first workflow project for making Python-oriented AI coding agents more reliable. It provides:
+Pyxis is a docs-first workflow project for making Python-oriented AI coding agents more reliable. It provides:
 
 - a canonical `AGENTS.md` Python project rule base,
 - a deployable procedural skill pack under `skills/`,
@@ -21,7 +21,7 @@ The product is not an application or package today. The product is an operationa
 The repository is considered stable when all of the following are true:
 
 - `main` is clean and matches `origin/main`.
-- Root `AGENTS.md` and `skills/py-new/templates/AGENTS.md` are byte-identical.
+- Root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` are byte-identical.
 - `model-tests/` verification passes.
 - `examples/wordstats` verification passes.
 - `examples/ttlcache` verification passes.
@@ -77,7 +77,7 @@ For the current phase, this project will not:
 |---|---|
 | Stable baseline and current state | [PROJECT-STATUS.md](PROJECT-STATUS.md) |
 | Product requirements and workflow policy | This PRD |
-| Python project rules | [AGENTS.md](AGENTS.md) and `skills/py-new/templates/AGENTS.md` |
+| Python project rules | [AGENTS.md](AGENTS.md) and `skills/scaffold/templates/AGENTS.md` |
 | Skill pack lifecycle and deployment | [skills/README.md](skills/README.md) |
 | Model-test protocol | [model-tests/TESTING.md](model-tests/TESTING.md) |
 | Model-test operator steps | [model-tests/RUNBOOK.md](model-tests/RUNBOOK.md) |
@@ -110,7 +110,7 @@ Required validation matrix:
 |---|---|---|---:|---|
 | AGENTS-only behavior | isolated skill-less | T2 | 2 | Operational test-first wording works without skills |
 | `tdd` trigger/procedure | isolated pack-enabled | T2 | 2 | Feature prompt loads and follows `tdd` without unnecessary questions |
-| `py-new` handoff | isolated pack-enabled | T1 | 2 | Scaffold completes requested behavior with valid RED |
+| `scaffold` handoff | isolated pack-enabled | T1 | 2 | Scaffold completes requested behavior with valid RED |
 | Regression closure | held-constant harness | T3 | 2 | Both changed observable operations receive retained coverage — **#9 validation (2026-06-21, bare/haiku): rule text alone did NOT achieve this; `get()` boundary guarded but `__len__()` unguarded in both trials. #19 validation (2026-06-22, pack/haiku): pack visibility also did NOT achieve this; same W2 failure in both trials. #22 validation (2026-06-22, bare/haiku, strengthened wording AGENTS_SHA `a1c50aee`): explicit multi-operation example + "reverting any one changed operation alone must fail a test" bar also did NOT achieve this for haiku. #24 validation (2026-06-23, bare/sonnet, same AGENTS_SHA): both trials guarded `get()` and `__len__()` and audit probes confirmed reverting either changed operation fails (`W2 PASS`, `W4 PASS`). F1 wording validated for sonnet; haiku remains model-selection limitation.** |
 
 If a pair splits 1-1, run a third trial before editing wording.
@@ -127,7 +127,7 @@ Validation outcome summary:
 | Finding | Phase 1 outcome | Follow-up |
 |---|---|---|
 | F1 | Strengthened multi-operation coverage wording validated under sonnet T3 x2; haiku remains a model-selection limitation for this class. | No wording patch. Use stronger model or skill enforcement for high-risk multi-operation bug fixes. |
-| F2 | `py-new` handoff validated for T1; pack-enabled T2 behavior was test-first but explicit `tdd` skill-trigger evidence was absent. | #14 defines required `Skill` tool-use evidence for future audits; issue #7 remains behavior-valid but not mechanism proof. |
+| F2 | `scaffold` handoff validated for T1; pack-enabled T2 behavior was test-first but explicit `tdd` skill-trigger evidence was absent. | #14 defines required `Skill` tool-use evidence for future audits; issue #7 remains behavior-valid but not mechanism proof. |
 | F3 | AGENTS-only T2 wording validated: haiku classified `--json` as a behavior change and wrote tests first. | None. |
 | F4 | RED-before-edit wording validated for haiku T2 x2. | None. |
 
@@ -135,7 +135,7 @@ Tracking issues:
 
 - #6 Validate AGENTS-only T2 behavior — complete.
 - #7 Validate pack-enabled T2 `tdd` trigger/procedure — complete, with #14 follow-up for explicit skill-trigger evidence.
-- #8 Validate pack-enabled T1 `py-new` handoff — complete.
+- #8 Validate pack-enabled T1 `scaffold` handoff — complete.
 - #9 Validate T3 regression closure — validation performed 2026-06-21 (held-constant bare, haiku); F1 rule-text patch insufficient: both trials fixed `get()`→`>=` and `__len__`→`<` but wrote a boundary test for `get()` only, leaving `__len__()` unguarded (audit probe: revert stays green).
 - #19 Validate pack-enabled T3 F1 follow-up — validation performed 2026-06-22 (Claude Code print, pack, haiku); pack visibility did not close F1: both trials repeated the same W2 failure. Follow-up #22 tracks stronger explicit multi-operation rule wording and re-validation.
 - #10 Summarize validation results and update ledgers — performed 2026-06-23; F1-F4 outcomes summarized and RUNS-LOG complete through #24.
@@ -291,7 +291,7 @@ A change is not ready if it:
 
 - leaves `main` without a passing verification path,
 - creates a second source of truth without marking one document historical,
-- changes root `AGENTS.md` without syncing `skills/py-new/templates/AGENTS.md`,
+- changes root `AGENTS.md` without syncing `skills/scaffold/templates/AGENTS.md`,
 - commits bulky run artifacts under `model-tests/runs/`,
 - updates rules/skills without updating `FINDINGS.md` or validation state when relevant,
 - adds feature work before Phase 1 validation without an explicit decision.
@@ -301,7 +301,7 @@ A change is not ready if it:
 1. Should GitHub issue templates be added now, or only after a few manual issues show a stable pattern?
 2. Should validation runs be managed as GitHub issues, one issue per validation condition? Answered for Phase 1: yes, issues #6-#10 with follow-up issues for unresolved validation findings.
 3. Should `PROJECT-STATUS.md` be updated after every merge, or only after stabilization milestones?
-4. Should local archives under `/home/hermes/projects/archive/` eventually be copied to durable external storage?
+4. Should local archives under `/home/<you>/projects/archive/` eventually be copied to durable external storage?
 
 ## 11. Immediate next action
 

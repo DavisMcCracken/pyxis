@@ -4,7 +4,7 @@ One run = one model x one task. Rubric and scoring live in [TESTING.md](TESTING.
 
 ## Once
 
-- [x] `C:\Users\Davis\model-test-runs` exists.
+- [x] `C:\Users\<you>\model-test-runs` exists.
 - [x] Isolated configs exist: `claude-test-pack` (pack only) and `claude-test-bare` (rules only).
 - [ ] After any skill edit, redeploy `skills/` into `claude-test-pack\skills\` before testing.
 - [ ] Confirm the chosen run directory does not already exist. Never reuse a dirty run directory.
@@ -15,14 +15,14 @@ One run = one model x one task. Rubric and scoring live in [TESTING.md](TESTING.
 Set the variables for one run:
 
 ```powershell
-$repo = "C:\Users\Davis\Documents\agent-refinement"
+$repo = "C:\Users\<you>\Documents\agent-refinement"
 $model = "<model>"
 $task = "<t1|t2|t3|t4>"
 $trial = "trial-1"
 $harness = "claude-code"
 $isolation = "pack" # or bare / crowded
-$claudeConfigDir = "C:\Users\Davis\claude-test-pack" # bare: claude-test-bare; crowded: $null
-$run = "C:\Users\Davis\model-test-runs\$model\$task\$trial"
+$claudeConfigDir = "C:\Users\<you>\claude-test-pack" # bare: claude-test-bare; crowded: $null
+$run = "C:\Users\<you>\model-test-runs\$model\$task\$trial"
 
 if (Test-Path $run) { throw "Run directory already exists: $run" }
 New-Item -ItemType Directory -Force $run | Out-Null
@@ -76,7 +76,7 @@ if ($task -eq "t3") {
 Always overlay the current canonical rules after fixture preparation:
 
 ```powershell
-Copy-Item "$repo\skills\py-new\templates\AGENTS.md" "$run\AGENTS.md" -Force
+Copy-Item "$repo\skills\scaffold\templates\AGENTS.md" "$run\AGENTS.md" -Force
 Set-Content "$run\CLAUDE.md" "@AGENTS.md"
 ```
 
@@ -206,8 +206,8 @@ opencode/north-mini-code-free
 Smoke test outside the repo:
 
 ```bash
-mkdir -p /home/hermes/model-test-runs/opencode-smoke
-cd /home/hermes/model-test-runs/opencode-smoke
+mkdir -p /home/<you>/model-test-runs/opencode-smoke
+cd /home/<you>/model-test-runs/opencode-smoke
 opencode run 'Respond with exactly: OPENCODE_SMOKE_OK'
 opencode run --format json 'Respond with exactly: OPENCODE_SMOKE_OK' > opencode-smoke.jsonl
 ```
