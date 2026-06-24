@@ -10,7 +10,7 @@ The repository is in a stable docs-and-test baseline suitable for normal use of 
 Current stable scope:
 
 - Root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` are the canonical synchronized Python project rules.
-- `skills/` contains the deployable skill pack: `scaffold`, `interview`, `tdd`, `debug`, `refactor`, and `_shared` references.
+- `skills/` contains the deployable skill pack: `interview`, `scaffold`, `to-prd`, `to-issues`, `tdd`, `debug`, `refactor`, `handoff`, and `_shared` references (`LANGUAGE`, `CONTEXT-FORMAT`, `ADR-FORMAT`, `PLATFORM`). The 0.2.0 skill-flow refactor (one spine + marked detours, Laziness ladder in the base, two-tier agnosticism) lives on `feat/v0.2.0-flow`; see `skills/README.md` for the flow map and `docs/adr/0001`–`0002`.
 - `examples/wordstats` and `examples/ttlcache` are green reference projects.
 - `model-tests/` contains the model-test rubric, runbook, findings ledger, transcript extractor, and committed run index.
 - Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/<you>/projects/archive/skills-model-test-runs-2026-06-20`.

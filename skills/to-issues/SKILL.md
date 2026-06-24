@@ -11,6 +11,8 @@ Turn a PRD into issues, each independently grabbable — a fresh session opening
 
 Where issues live is recorded in `docs/agents/issue-tracker.md` — GitHub, local-markdown, or freeform prose. Read it and follow its conventions. Never assume GitHub or shell out blindly; the config is the single source of where issues go. Labels come from `docs/agents/triage-labels.md`. See [../_shared/PLATFORM.md](../_shared/PLATFORM.md).
 
+If that config is absent, don't guess — ask the user where issues should live (GitHub, local-markdown under `.scratch/`, or elsewhere) before creating anything.
+
 > **Claude Code:** for the GitHub tracker, create each issue with `gh issue create --title "…" --label "…" --body "…"` (heredoc for multi-line bodies).
 
 ## One issue per independent slice

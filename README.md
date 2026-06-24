@@ -1,13 +1,13 @@
 # Pyxis
 
-A Python agent workflow you can install: an `AGENTS.md` rule base plus a matching skill pack — uv + ruff + ty + pytest + hypothesis + prek, with tiered test-driven development built in. Install the pack and your coding agent scaffolds new Python projects green from commit zero, builds features test-first, and debugs reproduce-first.
+A Python agent workflow you can install: an `AGENTS.md` rule base plus a matching skill pack — uv + ruff + ty + pytest + hypothesis + prek, with tiered test-driven development built in. Install the pack and your coding agent scaffolds new Python projects green from commit zero, builds features test-first, and debugs reproduce-first — guided from idea to ship by one clear skill flow.
 
-Two layers, two reach. The **`AGENTS.md` base is platform-agnostic** — any agent that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …) follows the same rules. The **skill pack targets Claude Code** and skills.sh-compatible agents; a few skills name Claude Code's Agent tool, but the discipline they encode is portable. No skills runtime? The base alone still does most of the work.
+Two layers, two reach. The **`AGENTS.md` base is agent-agnostic** — any agent that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …) follows the same rules. The **skill pack is written agnostic too**: it runs on any skills.sh-compatible agent, with any Claude-Code-specific step quarantined in a labelled `> **Claude Code:**` aside the reader can skip. No skills runtime? The base alone still does most of the work.
 
 ## Install
 
 ```bash
-npx skills add DavisMcCracken/pyxis                     # all five skills
+npx skills add DavisMcCracken/pyxis                     # all eight skills
 npx skills add DavisMcCracken/pyxis --skill scaffold    # or just one
 ```
 
@@ -15,15 +15,20 @@ Only the `skills/` pack is installed — `model-tests/` and `examples/` are main
 
 ## Skills
 
+Listed in flow order — `interview` is the head; start there.
+
 | Skill | Reach for it when |
 |---|---|
+| [`interview`](skills/interview/SKILL.md) | Sharpening an idea or plan — the head of every flow |
 | [`scaffold`](skills/scaffold/SKILL.md) | Starting a new Python project — green verify loop from commit zero |
+| [`to-prd`](skills/to-prd/SKILL.md) | Capturing a settled multi-session design as a PRD |
+| [`to-issues`](skills/to-issues/SKILL.md) | Splitting a PRD into independent, agent-ready issues |
 | [`tdd`](skills/tdd/SKILL.md) | Building a feature or fixing an ordinary bug — red-green-refactor slices |
 | [`debug`](skills/debug/SKILL.md) | A hard, intermittent, or unclear-cause bug needs reproduce-first investigation |
-| [`interview`](skills/interview/SKILL.md) | Stress-testing a plan or design before you build it |
 | [`refactor`](skills/refactor/SKILL.md) | Improving architecture — find shallow modules and deepen them |
+| [`handoff`](skills/handoff/SKILL.md) | Crossing context windows — compact a thread so a fresh session resumes it |
 
-See [skills/README.md](skills/README.md) for how the skills hand off to each other, plus deploy and provenance notes.
+See [skills/README.md](skills/README.md) for the flow map (what to run first and how the skills hand off), plus deploy and provenance notes.
 
 ## Repository layout
 
