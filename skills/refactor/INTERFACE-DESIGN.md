@@ -1,31 +1,33 @@
 # Interface Design
 
-Parallel sub-agent pattern for exploring alternative interfaces for a chosen deepening candidate. Rationale: "Design It Twice" (Ousterhout) — the first idea is rarely the best. Vocabulary: [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md).
+Explore 3+ radically different interfaces for a chosen deepening candidate, in parallel where the harness allows. Rationale: "Design It Twice" (Ousterhout) — the first idea is rarely the best. Vocabulary: [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md); platform asides: [../_shared/PLATFORM.md](../_shared/PLATFORM.md).
 
 ## Process
 
 ### 1. Frame the problem space
 
-Write a user-facing brief for the candidate before spawning anything:
+Write a user-facing brief for the candidate before exploring anything:
 
 - Constraints any interface must satisfy
 - Dependencies and their categories ([DEEPENING.md](DEEPENING.md))
 - A rough illustrative sketch — grounds the constraints, not a proposal
 
-Show it, then move straight to step 2; the user reads while agents work.
+Show it, then move straight to step 2; the user reads while exploration runs.
 
-### 2. Spawn sub-agents
+### 2. Explore divergent designs
 
-3+ parallel sub-agents (Claude Code: the Agent tool), each forced toward a **radically different** interface by its own design constraint:
+Explore 3+ designs, each forced toward a **radically different** interface by its own design constraint. Run them as parallel sub-agents if your harness supports them, otherwise work through them sequentially:
 
-- Agent 1 — minimize: 1–3 entry points, maximum leverage per entry point
-- Agent 2 — maximize flexibility: many use cases, extension room
-- Agent 3 — optimize the common caller: default case trivial
-- Agent 4 (when cross-seam deps exist) — ports & adapters throughout
+- Design 1 — minimize: 1–3 entry points, maximum leverage per entry point
+- Design 2 — maximize flexibility: many use cases, extension room
+- Design 3 — optimize the common caller: default case trivial
+- Design 4 (when cross-seam deps exist) — ports & adapters throughout
 
-Each gets a self-contained technical brief — file paths, coupling details, dependency categories, what hides behind the seam — written in LANGUAGE.md + `CONTEXT.md` vocabulary so naming stays consistent. The brief is separate from the step 1 user-facing framing.
+> **Claude Code:** spawn one Agent-tool sub-agent per design constraint so they run in parallel.
 
-Required output per agent:
+Each exploration gets a self-contained technical brief — file paths, coupling details, dependency categories, what hides behind the seam — written in LANGUAGE.md + `CONTEXT.md` vocabulary so naming stays consistent. The brief is separate from the step 1 user-facing framing.
+
+Required output per design:
 
 1. Interface — types, methods, params, plus invariants, ordering, error modes
 2. Caller usage example

@@ -19,7 +19,11 @@ The project's domain model informs the skill: domain language names the good sea
 
 ### 1. Explore
 
-Read `CONTEXT.md` (if present) and ADRs near the target area first. Then walk the codebase with a read-only exploration sub-agent (Claude Code: the Agent tool, `subagent_type=Explore`) — organically, no rigid heuristics. Note friction:
+Read `CONTEXT.md` (if present) and ADRs near the target area first. Then walk the codebase read-only and organically, no rigid heuristics — using parallel sub-agents if your harness has them, otherwise reading sequentially.
+
+> **Claude Code:** use the Agent tool with `subagent_type=Explore` for the read-only walk.
+
+Note friction:
 
 - Understanding one concept requires bouncing across many small modules
 - **Shallow** modules — interface nearly as complex as the implementation
