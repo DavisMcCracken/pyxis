@@ -18,7 +18,8 @@ Workshop for a Python agent workflow: an `AGENTS.md` rule base plus a matching s
 
 ## Quickstart
 
-- **Use the rules in a new project:** install the skill pack (copy `skills/` contents to `~/.claude/skills/`), then ask for a new Python project — `/scaffold` scaffolds it green from commit zero. Without skills: follow the bootstrap lines at the top of `AGENTS.md`.
+- **Install the skill pack:** `npx skills add DavisMcCracken/pyxis` (or pick one: `--skill scaffold`). Only `skills/` is installed — `model-tests/` and `examples/` are maintainer artifacts. Or copy `skills/` contents to `~/.claude/skills/` by hand.
+- **Use the rules in a new project:** with the pack installed, ask for a new Python project — `/scaffold` scaffolds it green from commit zero. Without skills: follow the bootstrap lines at the top of `AGENTS.md`.
 - **Evaluate a model against the workflow:** follow [model-tests/TESTING.md](model-tests/TESTING.md).
 - **Continue development or prepare a public release:** follow [DEVELOPMENT.md](DEVELOPMENT.md).
 
