@@ -76,7 +76,7 @@ if ($task -eq "t3") {
 Always overlay the current canonical rules after fixture preparation:
 
 ```powershell
-Copy-Item "$repo\skills\py-new\templates\AGENTS.md" "$run\AGENTS.md" -Force
+Copy-Item "$repo\skills\scaffold\templates\AGENTS.md" "$run\AGENTS.md" -Force
 Set-Content "$run\CLAUDE.md" "@AGENTS.md"
 ```
 

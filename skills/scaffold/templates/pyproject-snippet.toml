@@ -1,4 +1,4 @@
-# Appended to pyproject.toml by /py-new — tool config, single source of truth.
+# Appended to pyproject.toml by /scaffold — tool config, single source of truth.
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config", "-ra"]

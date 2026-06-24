@@ -33,7 +33,7 @@ All non-trivial work should move through this loop:
    ```
 4. **Make the smallest coherent change.**
    - One issue or one decision per PR.
-   - Keep root `AGENTS.md` and `skills/py-new/templates/AGENTS.md` identical when either changes.
+   - Keep root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` identical when either changes.
 5. **Validate at the right level.**
    - Do not run model tests for every docs or packaging edit.
    - Do run stronger validation when changing rules, skill triggers, or claimed model behavior.
@@ -69,20 +69,20 @@ Run:
 ```bash
 git diff --check
 npx skills add ./ --list
-npx skills add ./ --agent claude-code --skill py-new --copy
+npx skills add ./ --agent claude-code --skill scaffold --copy
 ```
 
 Use a temporary install location or clean up after the smoke test if needed.
 
 ### Level C — skill procedure or trigger wording
 
-Examples: changing when `tdd` should trigger, changing `py-new` behavior, adding a new skill.
+Examples: changing when `tdd` should trigger, changing `scaffold` behavior, adding a new skill.
 
 Run Level B checks plus a targeted manual or agent smoke test. Consider a calibrated model run if the change makes a behavior claim.
 
 ### Level D — core rule or validation-harness change
 
-Examples: `AGENTS.md`, `skills/py-new/templates/AGENTS.md`, `model-tests/` harness scripts, validation rubric.
+Examples: `AGENTS.md`, `skills/scaffold/templates/AGENTS.md`, `model-tests/` harness scripts, validation rubric.
 
 Run:
 
@@ -101,8 +101,8 @@ For rule wording meant to improve model behavior, create a validation issue and 
 The preferred public install path is skills.sh / `npx skills`:
 
 ```bash
-npx skills add DavisMcCracken/skills
-npx skills add DavisMcCracken/skills --agent claude-code --skill py-new
+npx skills add DavisMcCracken/pyxis
+npx skills add DavisMcCracken/pyxis --agent claude-code --skill scaffold
 ```
 
 For a cleaner public surface, maintain a separate distribution repo later, for example:
@@ -114,10 +114,10 @@ python-agent-skills/
 ├── AGENTS.md
 └── skills/
     ├── _shared/
-    ├── diagnose/
-    ├── grill-me/
-    ├── improve-codebase-architecture/
-    ├── py-new/
+    ├── debug/
+    ├── interview/
+    ├── refactor/
+    ├── scaffold/
     └── tdd/
 ```
 
@@ -151,7 +151,7 @@ Use this flow instead:
 5. **Validate the public repo.**
    ```bash
    npx skills add ./ --list
-   npx skills add ./ --agent claude-code --skill py-new --copy
+   npx skills add ./ --agent claude-code --skill scaffold --copy
    ```
 6. **Merge the public repo PR.**
 7. **Tag and release from the public repo.**
@@ -214,7 +214,7 @@ Good reasons:
 - changing `AGENTS.md`,
 - changing skill trigger descriptions,
 - adding a new skill,
-- changing `py-new` scaffold behavior,
+- changing `scaffold` scaffold behavior,
 - changing TDD/regression requirements,
 - comparing model or harness behavior.
 

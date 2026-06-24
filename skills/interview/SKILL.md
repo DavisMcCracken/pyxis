@@ -1,9 +1,9 @@
 ---
-name: grill-me
+name: interview
 description: Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. If the project keeps domain docs (CONTEXT.md, docs/adr/), challenges the plan against them and updates them inline as decisions crystallise. Use when user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
 ---
 
-# Grill Me
+# Interview
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
@@ -25,4 +25,4 @@ Run the behaviours below only when the project already keeps domain docs (`CONTE
 ## Handoffs
 
 - Design settled, ready to build test-first → `tdd`.
-- Plan turns out to hinge on an architectural problem → `improve-codebase-architecture`.
+- Plan turns out to hinge on an architectural problem → `refactor`.

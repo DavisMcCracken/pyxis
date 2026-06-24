@@ -40,7 +40,7 @@ If the project keeps domain docs, use the `CONTEXT.md` glossary so test names an
 
 Before writing code, infer the public interface and highest-priority behavior from the request, existing code, glossary, and ADRs. Ask the user only when a material ambiguity remains; otherwise state any assumption briefly and proceed. List behaviors, not implementation steps.
 
-For a non-trivial design (new module, schema, public API, algorithm choice), state 2–3 candidate approaches with trade-offs first — AGENTS.md Workflow rule. For a full interactive design session, the `grill-me` skill is the heavyweight version.
+For a non-trivial design (new module, schema, public API, algorithm choice), state 2–3 candidate approaches with trade-offs first — AGENTS.md Workflow rule. For a full interactive design session, the `interview` skill is the heavyweight version.
 
 ### 2. Tracer bullet
 
@@ -77,7 +77,7 @@ Run tests after each refactor step. Before the full verify loop, confirm tests c
 
 ## Bug fixes
 
-Enter the loop at RED: reproduce the bug with a failing test before touching the fix — no exceptions (AGENTS.md Workflow rule). If you can't reproduce it, stop TDD and switch to the `diagnose` skill; come back with its minimised repro as your first test.
+Enter the loop at RED: reproduce the bug with a failing test before touching the fix — no exceptions (AGENTS.md Workflow rule). If you can't reproduce it, stop TDD and switch to the `debug` skill; come back with its minimised repro as your first test.
 
 ## Checklist per cycle
 
