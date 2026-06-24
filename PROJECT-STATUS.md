@@ -1,7 +1,7 @@
 # Project Status
 
-Status date: 2026-06-23
-Latest verified PRD baseline commit: `e04f74b`
+Status date: 2026-06-24
+Latest verified release branch: `feat/v0.2.0-flow` pre-push audit, 2026-06-24
 
 ## Stable usable state
 
@@ -10,7 +10,7 @@ The repository is in a stable docs-and-test baseline suitable for normal use of 
 Current stable scope:
 
 - Root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` are the canonical synchronized Python project rules.
-- `skills/` contains the deployable skill pack: `scaffold`, `interview`, `tdd`, `debug`, `refactor`, and `_shared` references.
+- `skills/` contains the deployable skill pack: `interview`, `scaffold`, `to-prd`, `to-issues`, `tdd`, `debug`, `refactor`, `handoff`, and `_shared` references (`LANGUAGE`, `CONTEXT-FORMAT`, `ADR-FORMAT`, `PLATFORM`). The 0.2.0 skill-flow refactor (one spine + marked detours, Laziness ladder in the base, two-tier agnosticism) lives on `feat/v0.2.0-flow`; see `skills/README.md` for the flow map and `docs/adr/0001`–`0002`.
 - `examples/wordstats` and `examples/ttlcache` are green reference projects.
 - `model-tests/` contains the model-test rubric, runbook, findings ledger, transcript extractor, and committed run index.
 - Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/<you>/projects/archive/skills-model-test-runs-2026-06-20`.
@@ -69,7 +69,7 @@ Phase 1 empirical validation is now summarized. The completed validation set sup
 
 Open follow-up issues: none currently in the validation/harness sequence.
 
-Recommended next action: create a release-prep issue for `v0.1.0` skills distribution via skills.sh / `npx skills`, or create a separate issue before starting any calibrated OpenCode validation matrix or Phase 2 workflow-hardening feature.
+Recommended next action: push `feat/v0.2.0-flow`, open the 0.2.0 PR, then tag `v0.2.0` after merge and smoke-test the published `npx skills` install path.
 
 Completed Phase 1 validation:
 

@@ -24,5 +24,6 @@ Run the behaviours below only when the project already keeps domain docs (`CONTE
 
 ## Handoffs
 
-- Design settled, ready to build test-first → `tdd`.
+- Design settled, single-session build → `tdd`.
+- Design settled, multi-session build → `to-prd`.
 - Plan turns out to hinge on an architectural problem → `refactor`.
