@@ -57,4 +57,4 @@ Side effects land inline as decisions crystallise:
 
 ### 4. Implement
 
-Settled design → build with the `tdd` skill; the new interface is the test surface. [DEEPENING.md](DEEPENING.md) maps each dependency category to its testing strategy. Replace, don't layer: delete old unit tests on absorbed shallow modules once interface-level tests cover them.
+Settled design → build with the `tdd` skill; the new interface is the test surface. [DEEPENING.md](DEEPENING.md) maps each dependency category to its testing strategy. Replace, don't layer: delete old unit tests on absorbed shallow modules once interface-level tests cover them. The AGENTS.md Laziness ladder applies to the deepening too — build the smallest seam that holds; "one adapter = hypothetical, two = real" is that ladder's first rung.

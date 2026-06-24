@@ -46,7 +46,7 @@ All four must pass. Fix anything red before continuing — the user receives a w
 
 If the request includes product behavior, a green scaffold is not done:
 
-1. Continue with the `tdd` tracer-bullet loop: one behavior test, valid RED, minimal implementation.
+1. Continue with the `tdd` tracer-bullet loop: one behavior test, valid RED, minimal implementation (minimal per the AGENTS.md Laziness ladder — don't scaffold structure the behavior doesn't need yet).
 2. Replace the generated smoke test once real behavior coverage exists.
 3. Run the full verify loop again.
 

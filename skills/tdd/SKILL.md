@@ -51,6 +51,8 @@ RED:   write test for first behavior -> watch it fail
 GREEN: minimal code to pass -> watch it pass
 ```
 
+"Minimal code" is the AGENTS.md Laziness ladder: climb to the first rung that holds (reuse → stdlib → native → installed dep → one line), and write nothing past what the test demands.
+
 Valid RED means the intended test was collected and executed, and the failure points to the missing or incorrect behavior. Collection, import, syntax, fixture, and unrelated setup failures mean the test is broken, not RED.
 
 ### 3. Incremental loop
