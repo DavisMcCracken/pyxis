@@ -27,7 +27,7 @@ Run in order:
 1. `uv init --lib <name>` (or `--app --package <name>`)
 2. `uv add --dev pytest ruff ty hypothesis prek` then `uv add <runtime deps>` if any
 3. Append [templates/pyproject-snippet.toml](./templates/pyproject-snippet.toml) to the generated `pyproject.toml`
-4. Copy [templates/AGENTS.md](./templates/AGENTS.md) into the repo root as `AGENTS.md`; write `CLAUDE.md` containing exactly `@AGENTS.md`. If either file already exists, don't overwrite — show a diff against the template and ask.
+4. Copy [templates/AGENTS.md](./templates/AGENTS.md) into the repo root as `AGENTS.md`. If the agent reads a separate config file, point it at the base (Claude Code: write `CLAUDE.md` containing exactly `@AGENTS.md`). If either file already exists, don't overwrite — show a diff against the template and ask.
 5. Copy [templates/pre-commit-config.yaml](./templates/pre-commit-config.yaml) to `.pre-commit-config.yaml`
 6. Write `tests/test_smoke.py` — import the package's public surface and make one real assertion (e.g. against the generated `hello()`), so pytest collects at least one test (zero tests = exit code 5 = verify loop red). Note in the test that it should be replaced by the first real test.
 7. `git init` if not already a repo, then `uv run prek install`
