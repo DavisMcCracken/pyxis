@@ -30,7 +30,7 @@ Template: copy into each repo, trim or extend to fit the project.
 - Then take the first rung that holds: (1) does this need to exist at all? Speculative need → skip it. (2) Already in this codebase — a helper, type, or pattern? Reuse it. (3) Stdlib does it? Use it. (4) Native platform or language feature covers it? Use it over a dependency. (5) An already-installed dependency solves it? Use it — never add a new dep for what a few lines do. (6) Can it be one line? One line. (7) Only then: the minimum code that works.
 - Deletion over addition; boring over clever. No abstraction with one caller, no factory for one product, no config for a value that never changes, no scaffolding "for later".
 - Bug fix = root cause, not symptom. Grep every caller of the function you're about to touch; fix it once where they all route through, not per-caller.
-- Mark a deliberate shortcut with a `# shortcut:` comment naming the ceiling and the upgrade path (e.g. `# shortcut: O(n^2) scan, index if the list grows`). Never simplify away input validation, error handling that prevents data loss, security, or accessibility.
+- Mark a deliberate shortcut with a `# ponytail:` comment naming the ceiling and the upgrade path (e.g. `# ponytail: O(n^2) scan, index if the list grows`). Never simplify away input validation, error handling that prevents data loss, security, or accessibility.
 
 ## Testing
 

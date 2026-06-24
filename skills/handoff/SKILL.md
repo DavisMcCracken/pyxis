@@ -27,6 +27,6 @@ Write one markdown file (e.g. `docs/handoff-<slug>.md`, or a scratch location):
 
 Self-contained: assume the next session has none of this conversation. State and decisions, never a verbatim transcript.
 
-## Handoffs
+## After
 
 - File written → open a fresh session and reference it to continue. Staying in the same conversation while letting earlier turns summarize is a different move — handoff forks to a clean session; it does not continue in place.

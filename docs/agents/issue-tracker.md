@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and PRDs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
+Issues for this repo live as GitHub issues. PRDs live as repo markdown unless a skill explicitly says to publish them to the tracker. Use the `gh` CLI for issue operations.
 
 ## Conventions
 

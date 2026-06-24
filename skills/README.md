@@ -66,8 +66,10 @@ Derived from [Matt Pocock's skills](https://github.com/mattpocock/skills) — hi
 
 ## Deploy
 
+Claude Code example:
+
 ```bash
 npx skills add DavisMcCracken/pyxis --agent claude-code
 ```
 
-For local or manual install, copy the contents of this folder into `~/.claude/skills/` — the whole tree; `_shared/` relative links depend on sibling placement.
+For local or manual Claude Code install, copy the contents of this folder into `~/.claude/skills/` — the whole tree; `_shared/` relative links depend on sibling placement.

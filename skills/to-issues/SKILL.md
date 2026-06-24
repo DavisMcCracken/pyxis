@@ -9,17 +9,17 @@ Turn a PRD into issues, each independently grabbable — a fresh session opening
 
 ## Read the tracker config first
 
-Where issues live is recorded in `docs/agents/issue-tracker.md` — GitHub, local-markdown, or freeform prose. Read it and follow its conventions. Never assume GitHub or shell out blindly; the config is the single source of where issues go. Labels come from `docs/agents/triage-labels.md`. See [../_shared/PLATFORM.md](../_shared/PLATFORM.md).
+Where issues live is recorded in `docs/agents/issue-tracker.md`. Read it and follow its conventions. Never shell out blindly; the config is the single source of where issues go. Labels come from `docs/agents/triage-labels.md`. See [../_shared/PLATFORM.md](../_shared/PLATFORM.md).
 
-If that config is absent, don't guess — ask the user where issues should live (GitHub, local-markdown under `.scratch/`, or elsewhere) before creating anything.
+If that config is absent, don't guess — ask the user where issues should live before creating anything.
 
-> **Claude Code:** for the GitHub tracker, create each issue with `gh issue create --title "…" --label "…" --body "…"` (heredoc for multi-line bodies).
+If the user asks for a dry run, smoke test, or review draft, write issue drafts where they requested instead of publishing to the tracker.
 
 ## One issue per independent slice
 
 - Map each PRD deliverable to an issue. Split further only when a deliverable has parts that can ship separately; merge two that can't.
 - Each issue is **agent-ready**: enough to start cold — context (link the PRD plus the relevant ADR/`CONTEXT.md` terms), scope, acceptance, and any hard dependency stated explicitly ("depends on #N", not an assumption that numbers are sequential).
-- Label them ready-for-agent. These are issues *you* authored from a PRD — already specified, so they skip triage (triage is for incoming reports only).
+- Label them with the tracker string for `ready-for-agent`. These are issues *you* authored from a PRD — already specified, so they skip triage (triage is for incoming reports only).
 
 ## Handoffs
 
