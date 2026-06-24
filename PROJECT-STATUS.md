@@ -13,9 +13,9 @@ Current stable scope:
 - `skills/` contains the deployable skill pack: `scaffold`, `interview`, `tdd`, `debug`, `refactor`, and `_shared` references.
 - `examples/wordstats` and `examples/ttlcache` are green reference projects.
 - `model-tests/` contains the model-test rubric, runbook, findings ledger, transcript extractor, and committed run index.
-- Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/hermes/projects/archive/skills-model-test-runs-2026-06-20`.
-- Active validation runs (issues #6-#9, #19, and #22) and reusable launch/audit helper scripts live under `/home/hermes/model-test-runs/`; each run dir has `run.json` provenance and a `transcript.jsonl`. This path is outside the repo and gitignored.
-- Stale branch tips were preserved in `/home/hermes/projects/archive/skills-stale-branches-2026-06-20.bundle` before branch cleanup.
+- Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/<you>/projects/archive/skills-model-test-runs-2026-06-20`.
+- Active validation runs (issues #6-#9, #19, and #22) and reusable launch/audit helper scripts live under `/home/<you>/model-test-runs/`; each run dir has `run.json` provenance and a `transcript.jsonl`. This path is outside the repo and gitignored.
+- Stale branch tips were preserved in `/home/<you>/projects/archive/skills-stale-branches-2026-06-20.bundle` before branch cleanup.
 
 ## Verification baseline
 

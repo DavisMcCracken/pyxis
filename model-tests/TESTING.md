@@ -4,7 +4,7 @@ Measures functional results and workflow compliance under a recorded harness. Fo
 
 ## Protocol
 
-1. **Run outside this repository.** Use a path such as `C:\Users\Davis\model-test-runs\<model>\<task>`. A model that can read this repo, reference solutions, other runs, or undeclared skills is contaminated.
+1. **Run outside this repository.** Use a path such as `C:\Users\<you>\model-test-runs\<model>\<task>`. A model that can read this repo, reference solutions, other runs, or undeclared skills is contaminated.
 2. Copy the task fixture into the clean run directory. Then overlay the current canonical `skills/scaffold/templates/AGENTS.md`; do not rely on the fixture's stored snapshot.
 3. Record `run.json` before launch: requested model, harness, cwd, isolation mode, repo commit, AGENTS hash, skill-tree hash/root, Claude config directory, prompt, start time, and operator interventions. Add provider-reported model and finish time after the run.
 4. **Phase 1 default:** use an isolated config. `claude-test-pack` contains only this skill pack; `claude-test-bare` contains no skills. Pack auto-triggering is expected and scored. For Claude Code stream-json, skill invocation requires a `Skill` tool-use event for the expected skill; `init.skills` / `init.slash_commands` only prove availability.
