@@ -16,7 +16,7 @@ Show it, then move straight to step 2; the user reads while agents work.
 
 ### 2. Spawn sub-agents
 
-3+ parallel agents (Agent tool), each forced toward a **radically different** interface by its own design constraint:
+3+ parallel sub-agents (Claude Code: the Agent tool), each forced toward a **radically different** interface by its own design constraint:
 
 - Agent 1 — minimize: 1–3 entry points, maximum leverage per entry point
 - Agent 2 — maximize flexibility: many use cases, extension room

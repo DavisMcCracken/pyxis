@@ -1,6 +1,8 @@
 # Pyxis
 
-A Python agent workflow you can install: an `AGENTS.md` rule base plus a matching Claude Code skill pack — uv + ruff + ty + pytest + hypothesis + prek, with tiered test-driven development built in. Install the pack and your coding agent scaffolds new Python projects green from commit zero, builds features test-first, and debugs reproduce-first.
+A Python agent workflow you can install: an `AGENTS.md` rule base plus a matching skill pack — uv + ruff + ty + pytest + hypothesis + prek, with tiered test-driven development built in. Install the pack and your coding agent scaffolds new Python projects green from commit zero, builds features test-first, and debugs reproduce-first.
+
+Two layers, two reach. The **`AGENTS.md` base is platform-agnostic** — any agent that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …) follows the same rules. The **skill pack targets Claude Code** and skills.sh-compatible agents; a few skills name Claude Code's Agent tool, but the discipline they encode is portable. No skills runtime? The base alone still does most of the work.
 
 ## Install
 
