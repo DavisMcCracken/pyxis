@@ -1,47 +1,73 @@
 # Python Agent Skill Pack
 
-Cohesive skill set built around the [AGENTS.md base](../AGENTS.md). AGENTS.md holds the always-loaded constraints; these skills hold the procedures. No skill is referenced from AGENTS.md — the base stays harness-agnostic and degrades gracefully without them.
+Cohesive skill set built around the [AGENTS.md base](../AGENTS.md). AGENTS.md holds the always-loaded constraints; these skills hold the procedures. No skill is referenced from AGENTS.md — the base stays agent-agnostic and degrades gracefully without them.
 
-Derived from [Matt Pocock's skills](https://github.com/mattpocock/skills) — his structure, phase ordering, and battle-tested sequencing are kept (that's the intent worth preserving); all prose is rewritten and compressed, examples re-derived, and everything re-grounded in this pack's Python stack. His four target failure modes still map: misalignment → `interview`; verbosity → `CONTEXT.md` shared language; buggy code → `tdd` + `debug` feedback loops; architectural decay → `refactor`.
+## The flow
 
-## Lifecycle map
+Most work travels one **spine**, idea to shipped code; a few **detours** and **on-ramps** merge onto it. Vocabulary: [../CONTEXT.md](../CONTEXT.md).
 
-| Stage | Skill | Role |
-|---|---|---|
-| Birth | `scaffold` | Scaffold uv + ruff + ty + pytest + prek project, then finish requested product behavior test-first |
-| Design | `interview` | One-question-at-a-time interview; updates CONTEXT.md/ADRs inline when the project keeps them |
-| Build | `tdd` | Red-green-refactor, vertical slices; Python testing + faking rules for features and ordinary reproducible bugs |
-| Broken | `debug` | Feedback-loop-first discipline for hard or uncertain bugs; hands repro to `tdd`-style regression test |
-| Aging | `refactor` | Find shallow modules, deepen them; implements via `tdd` |
+**Start here** — match your situation:
 
-Cross-references: `interview` -> `tdd` / `refactor`; `tdd` -> `debug` (can't reproduce) and back (minimised repro becomes first test); `debug` -> `refactor` (no correct seam = architecture finding); `refactor` -> `tdd` (implement the deepened design).
+- **An idea (new or existing codebase)** → `interview`. The head; always start here.
+- **Aging codebase, no specific idea** → `refactor` to surface one, then `interview`.
+- **A bug** → `tdd` if you can reproduce it; `debug` if you can't or the cause is unclear.
 
-`_shared/` holds vocabulary and formats used by multiple skills: `LANGUAGE.md` (module/interface/seam/depth), `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`. Not a skill — no SKILL.md, never triggers.
+```
+  interview ......... the head: grill the idea (works even before a repo exists)
+    |  └─ new repo? → scaffold (bootstrap green, stamp the stack into AGENTS.md), then continue
+    |
+  FORK — multi-session build?
+    ├─ yes → to-prd → to-issues → [clear context, fresh session per issue] → tdd
+    └─ no  → tdd  (same window)
+                └─ can't reproduce / unclear → debug → repro becomes first tdd test
 
-## Changes vs the originals
+  on-ramp:  refactor — run anytime; a finding becomes an idea you carry back to interview
+  bridge:   handoff  — at any long phase, when context nears the smart-zone, resume in a fresh session
+```
 
-- **`interview` absorbs `grill-with-docs`.** Identical core text existed in both. The docs layer is now conditional: it activates only when the project already has `CONTEXT.md`/`docs/adr/` or the user asks to record decisions. Plain grilling no longer seeds doc conventions into repos that didn't opt in. **Retire the old `grill-with-docs` folder on deploy.**
-- **`tdd` went 6 files -> 2** (`SKILL.md`, `tests.md`). TypeScript/jest examples rewritten in Python (pytest, monkeypatch, hand-written fakes, `Protocol`). `deep-modules.md` + `interface-design.md` folded into `_shared/LANGUAGE.md` references; `refactoring.md` folded into the Refactor step. Faking preference order added: real thing -> hand-written fake -> monkeypatch -> MagicMock. New: valid RED means the intended test collects, executes, and fails for the target behavior; ordinary bug-fix entry point; verify-loop and coverage-closure exit.
-- **`debug`** kept whole — strongest original. Added: scope note (ordinary bugs don't need it), narrowed trigger for uncertain/intermittent/cross-system/performance failures, `hypothesis` for fuzz loops, `tmp_path`/injected-clock determinism examples, throwaway harnesses follow the `spike_*.py` convention, full verify loop in Phase 6 checklist.
-- **`refactor`** kept whole. Refs repointed from `../grill-with-docs/` to `../_shared/`; grilling loop now names `interview` discipline; new step 4 (implement via `tdd`, replace-don't-layer); DEEPENING examples Pythonised (SQLite `:memory:`, `tmp_path`, `Protocol` ports); "mock adapter" -> "hand-written fake adapter".
-- **`scaffold`** now runs past a green scaffold when the request names product behavior: real behavior test, valid RED, minimal implementation, verify loop again. The canonical AGENTS.md template lives in its `templates/`.
+1. **`interview`** — grill the idea until the design is sharp; record terms in `CONTEXT.md` and decisions in `docs/adr/` when the project keeps them. The one entry point, new project or old.
+2. **`scaffold`** *(detour, new repos only)* — bootstrap a green uv + ruff + ty + pytest + prek project; the stack decisions from the interview get stamped into the new `AGENTS.md`.
+3. **Fork — multi-session?**
+   - **Yes** → **`to-prd`** (capture the thread as a PRD) → **`to-issues`** (split into independent, agent-ready issues). Then clear context and run each issue in a **fresh session** carrying the PRD + that one issue.
+   - **No** → straight to `tdd`, same window.
+4. **`tdd`** — build each slice red-green-refactor; minimal per the Laziness ladder.
+5. **`debug`** *(detour off `tdd`)* — when a bug won't reproduce or the cause is unclear; the minimized repro becomes the first `tdd` test, back onto the spine.
+6. **`refactor`** *(on-ramp / upkeep)* — run anytime to keep the codebase deep and navigable; a finding becomes an idea for `interview`.
+7. **`handoff`** *(bridge)* — when a long phase nears the smart-zone, or you need to fork, compact the thread to a file and resume in a fresh session.
+
+## Skills
+
+| Skill | Reach for it when |
+|---|---|
+| `interview` | Sharpening an idea or plan — the head of every flow |
+| `scaffold` | Starting a new Python project — green verify loop from commit zero |
+| `to-prd` | Capturing a settled multi-session design as a PRD |
+| `to-issues` | Splitting a PRD into independent, agent-ready issues |
+| `tdd` | Building a feature or fixing an ordinary bug — red-green-refactor slices |
+| `debug` | A hard, intermittent, or unclear-cause bug needs reproduce-first work |
+| `refactor` | Improving architecture — find shallow modules and deepen them |
+| `handoff` | Crossing context windows — compact a thread so a fresh session resumes it |
+
+`_shared/` holds references used by multiple skills: `LANGUAGE.md` (module / interface / seam / depth), `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`, `PLATFORM.md` (agent-agnostic prose + the `> **Claude Code:**` aside convention). Not skills — no SKILL.md, never trigger.
 
 ## Shared principles (enforced across all)
 
-- Trigger -> action wording; no "prefer/consider" vibes.
+- Trigger → action wording; no "prefer/consider" vibes.
 - Questions one at a time, each with a recommended answer.
 - Lazy file creation; doc conventions are opt-in per project.
+- Laziness ladder (AGENTS.md): reuse → stdlib → native → installed dep → one line → minimal code. Skills defer to it, never restate it.
+- Agent-agnostic prose; any Claude-Code specific quarantined in a `> **Claude Code:**` aside (`_shared/PLATFORM.md`). Grep the marker to audit.
 - Stack specifics (verify loop, faking rules) defer to AGENTS.md; skills are the long form, not a second source of truth.
 - Spikes and throwaway harnesses: `spike_*.py`, `THROWAWAY` header, run and record the verdict, then delete before handoff unless the user asks to keep it.
 
-## Deploy
+## Provenance
 
-Preferred public install path, once the repo is published through skills.sh / `npx skills`:
+Derived from [Matt Pocock's skills](https://github.com/mattpocock/skills) — his structure, phase ordering, and sequencing kept; prose rewritten and compressed, examples re-derived, everything re-grounded in this pack's Python stack. His four target failure modes still map: misalignment → `interview`; verbosity → `CONTEXT.md` shared language; buggy code → `tdd` + `debug`; architectural decay → `refactor`. 0.2.0 adds the connective skills (`to-prd`, `to-issues`, `handoff`), the Laziness ladder in the base, and the two-tier agnostic discipline.
+
+## Deploy
 
 ```bash
 npx skills add DavisMcCracken/pyxis --agent claude-code
 ```
 
-For local/manual install, copy the contents of this folder into `~/.claude/skills/` — whole tree, `_shared/` relative links depend on sibling placement.
-
-Migrating from Matt Pocock's originals? Remove the superseded pieces first: `grill-with-docs/` (merged into `interview`) and the old `tdd` support files (`deep-modules.md`, `interface-design.md`, `mocking.md`, `refactoring.md`). His other skills coexist fine.
+For local or manual install, copy the contents of this folder into `~/.claude/skills/` — the whole tree; `_shared/` relative links depend on sibling placement.
