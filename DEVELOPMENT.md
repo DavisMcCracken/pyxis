@@ -98,7 +98,7 @@ For rule wording meant to improve model behavior, create a validation issue and 
 
 ## Distribution strategy
 
-**This repository is the distribution.** `npx skills` installs only the `skills/` pack — `model-tests/`, `examples/`, and the planning docs stay here as maintainer artifacts and never reach a user's install (verify with `npx skills add ./ --list`: it reports exactly the five skills). One repo is the right default and stays correct as long as that projection holds.
+**This repository is the distribution.** `npx skills` installs only the `skills/` pack — `model-tests/`, `examples/`, and the planning docs stay here as maintainer artifacts and never reach a user's install (verify with `npx skills add ./ --list`: it reports exactly the eight skills). One repo is the right default and stays correct as long as that projection holds.
 
 The public install path is skills.sh / `npx skills`:
 
@@ -110,23 +110,26 @@ npx skills add DavisMcCracken/pyxis --agent claude-code --skill scaffold
 A separate, product-only repo is **optional and deferred** — reach for it only with a concrete reason (external contributors tripping over the dev layer, or a vanity install slug), never for correctness. If that day comes, the projection looks like:
 
 ```text
-python-agent-skills/
+pyxis-public/
 ├── README.md
 ├── LICENSE
 ├── AGENTS.md
 └── skills/
     ├── _shared/
     ├── debug/
+    ├── handoff/
     ├── interview/
     ├── refactor/
     ├── scaffold/
-    └── tdd/
+    ├── tdd/
+    ├── to-issues/
+    └── to-prd/
 ```
 
 Users should install from the distribution repo once it exists:
 
 ```bash
-npx skills add DavisMcCracken/python-agent-skills
+npx skills add DavisMcCracken/<public-repo>
 ```
 
 Until then, publishing from this repo is acceptable if the README is clear that `model-tests/` and `examples/` are maintainer artifacts.
@@ -160,29 +163,29 @@ Use this flow instead:
 6. **Merge the public repo PR.**
 7. **Tag and release from the public repo.**
    ```bash
-   git tag v0.1.0
-   git push origin v0.1.0
-   gh release create v0.1.0 --title "v0.1.0" --generate-notes
+   git tag <version>
+   git push origin <version>
+   gh release create <version> --title "<version>" --generate-notes
    ```
 8. **Smoke-test the published install path.**
    ```bash
-   npx skills add DavisMcCracken/python-agent-skills --list
+   npx skills add DavisMcCracken/<public-repo> --list
    ```
 
 ### Minimal sync command
 
-From the dev repo root, assuming the public repo is checked out beside it at `../python-agent-skills`:
+From the dev repo root, assuming the public repo is checked out beside it at `../pyxis-public`:
 
 ```bash
 rsync -a --delete \
   README.md LICENSE AGENTS.md skills/ \
-  ../python-agent-skills/
+  ../pyxis-public/
 ```
 
 Then inspect before committing in the public repo:
 
 ```bash
-cd ../python-agent-skills
+cd ../pyxis-public
 git status --short
 git diff --stat
 git diff --check

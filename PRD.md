@@ -305,11 +305,10 @@ A change is not ready if it:
 
 ## 11. Immediate next action
 
-Phase 1 validation is complete and summarized. The project is ready for a first skills-focused release path.
+Phase 1 validation and the first skills-focused release path are complete. The next release path is the 0.2.0 skill-flow branch.
 
 Recommended next issue:
 
-1. Prepare `v0.1.0` skills distribution via skills.sh / `npx skills`.
-2. Add any missing public-release basics, especially `LICENSE` and install instructions.
-3. Decide whether first release installs from this repo or from a separate product-only distribution repo.
-4. If using a separate public repo, sync product files by allowlist as described in `DEVELOPMENT.md`; do not copy and paste files by hand.
+1. Push `feat/v0.2.0-flow` and open the 0.2.0 PR.
+2. Merge after the release audit is green.
+3. Tag `v0.2.0` and smoke-test the published `npx skills` install path.

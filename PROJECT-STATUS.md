@@ -1,7 +1,7 @@
 # Project Status
 
-Status date: 2026-06-23
-Latest verified PRD baseline commit: `e04f74b`
+Status date: 2026-06-24
+Latest verified release branch: `feat/v0.2.0-flow` pre-push audit, 2026-06-24
 
 ## Stable usable state
 
@@ -69,7 +69,7 @@ Phase 1 empirical validation is now summarized. The completed validation set sup
 
 Open follow-up issues: none currently in the validation/harness sequence.
 
-Recommended next action: create a release-prep issue for `v0.1.0` skills distribution via skills.sh / `npx skills`, or create a separate issue before starting any calibrated OpenCode validation matrix or Phase 2 workflow-hardening feature.
+Recommended next action: push `feat/v0.2.0-flow`, open the 0.2.0 PR, then tag `v0.2.0` after merge and smoke-test the published `npx skills` install path.
 
 Completed Phase 1 validation:
 
