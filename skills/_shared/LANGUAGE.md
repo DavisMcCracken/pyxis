@@ -1,6 +1,6 @@
 # Language
 
-Shared architecture vocabulary for `tdd` and `improve-codebase-architecture`. Use these exact terms — never "component," "service," "API," or (in architecture talk) "boundary." Consistency is the point: a precise shared language costs fewer tokens than re-explaining concepts.
+Shared architecture vocabulary for `tdd` and `refactor`. Use these exact terms — never "component," "service," "API," or (in architecture talk) "boundary." Consistency is the point: a precise shared language costs fewer tokens than re-explaining concepts.
 
 ## Terms
 

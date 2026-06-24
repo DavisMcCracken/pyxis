@@ -1,9 +1,9 @@
 ---
-name: improve-codebase-architecture
+name: refactor
 description: Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
 ---
 
-# Improve Codebase Architecture
+# Refactor
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. Goal: testability and AI-navigability.
 
@@ -46,7 +46,7 @@ No interface proposals yet. Ask: "Which of these would you like to explore?"
 
 ### 3. Grilling loop
 
-User picks a candidate → switch to the `grill-me` discipline: one question at a time, recommended answer each, codebase over questions. Walk the design tree — constraints, dependencies, the deepened module's shape, what hides behind the seam, which tests survive.
+User picks a candidate → switch to the `interview` discipline: one question at a time, recommended answer each, codebase over questions. Walk the design tree — constraints, dependencies, the deepened module's shape, what hides behind the seam, which tests survive.
 
 Side effects land inline as decisions crystallise:
 

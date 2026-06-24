@@ -1,9 +1,9 @@
 ---
-name: diagnose
+name: debug
 description: Diagnoses hard or uncertain bugs by building a feedback loop, reproducing, hypothesizing, instrumenting, fixing, and regression-testing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
 ---
 
-# Diagnose
+# Debug
 
 Discipline for hard bugs. Skip a phase only with stated justification. Ordinary bug with an obvious repro? The AGENTS.md rule (failing test, then fix) suffices — this skill is the escalation path.
 
@@ -107,4 +107,4 @@ Done means:
 - [ ] Full verify loop green (`uv run ruff check --fix && uv run ruff format && uv run ty check && uv run pytest`)
 - [ ] Winning hypothesis stated in the commit/PR message — the next debugger learns
 
-Last question: **what would have prevented this?** If the answer is architectural (no test seam, tangled callers, hidden coupling), hand the specifics to `improve-codebase-architecture` — after the fix lands, not before. You know more now.
+Last question: **what would have prevented this?** If the answer is architectural (no test seam, tangled callers, hidden coupling), hand the specifics to `refactor` — after the fix lands, not before. You know more now.

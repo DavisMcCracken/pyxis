@@ -33,7 +33,7 @@ All non-trivial work should move through this loop:
    ```
 4. **Make the smallest coherent change.**
    - One issue or one decision per PR.
-   - Keep root `AGENTS.md` and `skills/py-new/templates/AGENTS.md` identical when either changes.
+   - Keep root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` identical when either changes.
 5. **Validate at the right level.**
    - Do not run model tests for every docs or packaging edit.
    - Do run stronger validation when changing rules, skill triggers, or claimed model behavior.
@@ -69,20 +69,20 @@ Run:
 ```bash
 git diff --check
 npx skills add ./ --list
-npx skills add ./ --agent claude-code --skill py-new --copy
+npx skills add ./ --agent claude-code --skill scaffold --copy
 ```
 
 Use a temporary install location or clean up after the smoke test if needed.
 
 ### Level C — skill procedure or trigger wording
 
-Examples: changing when `tdd` should trigger, changing `py-new` behavior, adding a new skill.
+Examples: changing when `tdd` should trigger, changing `scaffold` behavior, adding a new skill.
 
 Run Level B checks plus a targeted manual or agent smoke test. Consider a calibrated model run if the change makes a behavior claim.
 
 ### Level D — core rule or validation-harness change
 
-Examples: `AGENTS.md`, `skills/py-new/templates/AGENTS.md`, `model-tests/` harness scripts, validation rubric.
+Examples: `AGENTS.md`, `skills/scaffold/templates/AGENTS.md`, `model-tests/` harness scripts, validation rubric.
 
 Run:
 
@@ -98,14 +98,16 @@ For rule wording meant to improve model behavior, create a validation issue and 
 
 ## Distribution strategy
 
-The preferred public install path is skills.sh / `npx skills`:
+**This repository is the distribution.** `npx skills` installs only the `skills/` pack — `model-tests/`, `examples/`, and the planning docs stay here as maintainer artifacts and never reach a user's install (verify with `npx skills add ./ --list`: it reports exactly the five skills). One repo is the right default and stays correct as long as that projection holds.
+
+The public install path is skills.sh / `npx skills`:
 
 ```bash
-npx skills add DavisMcCracken/skills
-npx skills add DavisMcCracken/skills --agent claude-code --skill py-new
+npx skills add DavisMcCracken/pyxis
+npx skills add DavisMcCracken/pyxis --agent claude-code --skill scaffold
 ```
 
-For a cleaner public surface, maintain a separate distribution repo later, for example:
+A separate, product-only repo is **optional and deferred** — reach for it only with a concrete reason (external contributors tripping over the dev layer, or a vanity install slug), never for correctness. If that day comes, the projection looks like:
 
 ```text
 python-agent-skills/
@@ -114,10 +116,10 @@ python-agent-skills/
 ├── AGENTS.md
 └── skills/
     ├── _shared/
-    ├── diagnose/
-    ├── grill-me/
-    ├── improve-codebase-architecture/
-    ├── py-new/
+    ├── debug/
+    ├── interview/
+    ├── refactor/
+    ├── scaffold/
     └── tdd/
 ```
 
@@ -130,6 +132,8 @@ npx skills add DavisMcCracken/python-agent-skills
 Until then, publishing from this repo is acceptable if the README is clear that `model-tests/` and `examples/` are maintainer artifacts.
 
 ## Dev repo → public distribution repo flow
+
+*Only relevant if you split out a separate distribution repo (the optional, deferred path above). For single-repo releases, skip to "Release cadence."*
 
 Do **not** copy and paste files by hand. Manual copying is easy to do inconsistently and leaves no reproducible trail.
 
@@ -151,7 +155,7 @@ Use this flow instead:
 5. **Validate the public repo.**
    ```bash
    npx skills add ./ --list
-   npx skills add ./ --agent claude-code --skill py-new --copy
+   npx skills add ./ --agent claude-code --skill scaffold --copy
    ```
 6. **Merge the public repo PR.**
 7. **Tag and release from the public repo.**
@@ -214,7 +218,7 @@ Good reasons:
 - changing `AGENTS.md`,
 - changing skill trigger descriptions,
 - adding a new skill,
-- changing `py-new` scaffold behavior,
+- changing `scaffold` scaffold behavior,
 - changing TDD/regression requirements,
 - comparing model or harness behavior.
 
@@ -230,7 +234,7 @@ Skip model tests for:
 The sustainable flow is:
 
 ```text
-issue → branch → change → right-sized validation → PR → merge to dev repo main → allowlist sync to public repo → public PR → tag/release → smoke-test npx skills install
+issue → branch → change → right-sized validation → PR → squash-merge to main → tag/release → smoke-test npx skills install
 ```
 
-Keep this repo as the lab and source of truth. Make the public repo or release artifact a reproducible projection of the product layer, never a hand-maintained copy-paste fork.
+This repo is both the lab and the distribution. If you ever split out a product-only repo, make it a reproducible allowlist projection of `skills/`, never a hand-maintained copy-paste fork.
