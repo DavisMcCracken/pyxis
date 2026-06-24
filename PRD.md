@@ -1,4 +1,4 @@
-# Product Requirements Document: agent-refinement / pyxis
+# Product Requirements Document: Pyxis
 
 Status: Working PRD
 Owner: Davis McCracken
@@ -7,7 +7,7 @@ Tracking issues: #4, #11, #17, #24
 
 ## 1. Summary
 
-`agent-refinement/pyxis` is a docs-first workflow project for making Python-oriented AI coding agents more reliable. It provides:
+Pyxis is a docs-first workflow project for making Python-oriented AI coding agents more reliable. It provides:
 
 - a canonical `AGENTS.md` Python project rule base,
 - a deployable procedural skill pack under `skills/`,

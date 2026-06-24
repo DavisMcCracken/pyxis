@@ -98,14 +98,16 @@ For rule wording meant to improve model behavior, create a validation issue and 
 
 ## Distribution strategy
 
-The preferred public install path is skills.sh / `npx skills`:
+**This repository is the distribution.** `npx skills` installs only the `skills/` pack — `model-tests/`, `examples/`, and the planning docs stay here as maintainer artifacts and never reach a user's install (verify with `npx skills add ./ --list`: it reports exactly the five skills). One repo is the right default and stays correct as long as that projection holds.
+
+The public install path is skills.sh / `npx skills`:
 
 ```bash
 npx skills add DavisMcCracken/pyxis
 npx skills add DavisMcCracken/pyxis --agent claude-code --skill scaffold
 ```
 
-For a cleaner public surface, maintain a separate distribution repo later, for example:
+A separate, product-only repo is **optional and deferred** — reach for it only with a concrete reason (external contributors tripping over the dev layer, or a vanity install slug), never for correctness. If that day comes, the projection looks like:
 
 ```text
 python-agent-skills/
@@ -130,6 +132,8 @@ npx skills add DavisMcCracken/python-agent-skills
 Until then, publishing from this repo is acceptable if the README is clear that `model-tests/` and `examples/` are maintainer artifacts.
 
 ## Dev repo → public distribution repo flow
+
+*Only relevant if you split out a separate distribution repo (the optional, deferred path above). For single-repo releases, skip to "Release cadence."*
 
 Do **not** copy and paste files by hand. Manual copying is easy to do inconsistently and leaves no reproducible trail.
 
@@ -230,7 +234,7 @@ Skip model tests for:
 The sustainable flow is:
 
 ```text
-issue → branch → change → right-sized validation → PR → merge to dev repo main → allowlist sync to public repo → public PR → tag/release → smoke-test npx skills install
+issue → branch → change → right-sized validation → PR → squash-merge to main → tag/release → smoke-test npx skills install
 ```
 
-Keep this repo as the lab and source of truth. Make the public repo or release artifact a reproducible projection of the product layer, never a hand-maintained copy-paste fork.
+This repo is both the lab and the distribution. If you ever split out a product-only repo, make it a reproducible allowlist projection of `skills/`, never a hand-maintained copy-paste fork.
