@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Diagnose hard or uncertain bugs reproduce-first — build a feedback loop before hypothesizing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
+description: Diagnose hard or uncertain bugs, reproduce-first — build a feedback loop before hypothesizing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
 ---
 
 # Debug
@@ -30,7 +30,7 @@ Spend disproportionate effort here.
 
 ### Then make the loop tight
 
-A *tight* loop — fast, sharp, deterministic — is the product; treat it as one:
+A *tight* loop is the product; treat it as one:
 
 - **Faster** — cache setup, skip unrelated init, narrow scope (`uv run pytest --last-failed -x` for test-shaped loops).
 - **Sharper** — assert the exact symptom, not "didn't crash".
