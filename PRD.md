@@ -2,8 +2,8 @@
 
 Status: Working PRD
 Owner: Davis McCracken
-Last updated: 2026-06-22
-Tracking issues: #4, #11, #17, #24
+Last updated: 2026-07-01
+Tracking issues: #4, #11, #17, #24, #35–#41
 
 ## 1. Summary
 
@@ -82,7 +82,7 @@ For the current phase, this project will not:
 | Model-test protocol | [model-tests/TESTING.md](model-tests/TESTING.md) |
 | Model-test operator steps | [model-tests/RUNBOOK.md](model-tests/RUNBOOK.md) |
 | Findings and validation state | [model-tests/FINDINGS.md](model-tests/FINDINGS.md) |
-| Historical design rationale | `model-tests/REVISED-PLAN*.md`, `model-tests/PATCH-REVIEW.md`, `model-tests/INDEPENDENT-RECOMMENDATIONS.md` |
+| Historical design rationale | `model-tests/history/` (REVISED-PLAN, SECOND-REVIEW, INDEPENDENT-RECOMMENDATIONS, PATCH-REVIEW, CHANGELOG) |
 | Committed run index | [model-tests/RUNS-LOG.md](model-tests/RUNS-LOG.md) |
 
 ## 7. Active roadmap
@@ -145,9 +145,16 @@ Tracking issues:
 
 ### Phase 2 — Workflow hardening
 
-Status: ready for new issue selection after Phase 1 summary and clean OpenCode harness setup.
+Status: v0.2.0 skill-flow refactor shipped to `main` (`ff9025f`, 2026-06-24). Issues #35–#41 closed.
 
-Potential work, only if supported by validation evidence:
+The 0.2.0 refactor added:
+- Laziness ladder in the `AGENTS.md` base (issue #35)
+- Claude-aside convention + agnostic audit of all skills (issue #36)
+- Three new connective skills: `to-prd` (#37), `to-issues` (#38), `handoff` (#39)
+- Rewritten `skills/README.md` as the single canonical flow map (#40)
+- Docs sync and version bump (#41)
+
+Remaining potential work, only if supported by validation evidence:
 
 - tighten any rule/skill wording that fails validation,
 - add a small issue/PR template set if repeated PRs show missing information,
@@ -305,10 +312,10 @@ A change is not ready if it:
 
 ## 11. Immediate next action
 
-Phase 1 validation and the first skills-focused release path are complete. The next release path is the 0.2.0 skill-flow branch.
+Phase 1 validation complete. v0.2.0 skill-flow refactor shipped to `main` (`ff9025f`). All GitHub issues closed.
 
-Recommended next issue:
+Recommended next action:
 
-1. Push `feat/v0.2.0-flow` and open the 0.2.0 PR.
-2. Merge after the release audit is green.
-3. Tag `v0.2.0` and smoke-test the published `npx skills` install path.
+1. Tag `v0.2.0` on `main`.
+2. Smoke-test the published `npx skills add DavisMcCracken/pyxis` install path.
+3. Verify all 8 skills install correctly and the flow map in `skills/README.md` renders.

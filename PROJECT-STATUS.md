@@ -1,7 +1,7 @@
 # Project Status
 
-Status date: 2026-06-24
-Latest verified release branch: `feat/v0.2.0-flow` pre-push audit, 2026-06-24
+Status date: 2026-07-01
+Latest release: v0.2.0 skill flow merged to `main` (`ff9025f`, 2026-06-24)
 
 ## Stable usable state
 
@@ -10,7 +10,7 @@ The repository is in a stable docs-and-test baseline suitable for normal use of 
 Current stable scope:
 
 - Root `AGENTS.md` and `skills/scaffold/templates/AGENTS.md` are the canonical synchronized Python project rules.
-- `skills/` contains the deployable skill pack: `interview`, `scaffold`, `to-prd`, `to-issues`, `tdd`, `debug`, `refactor`, `handoff`, and `_shared` references (`LANGUAGE`, `CONTEXT-FORMAT`, `ADR-FORMAT`, `PLATFORM`). The 0.2.0 skill-flow refactor (one spine + marked detours, Laziness ladder in the base, two-tier agnosticism) lives on `feat/v0.2.0-flow`; see `skills/README.md` for the flow map and `docs/adr/0001`–`0002`.
+- `skills/` contains the deployable skill pack (v0.2.0): `interview`, `scaffold`, `to-prd`, `to-issues`, `tdd`, `debug`, `refactor`, `handoff`, and `_shared` references (`LANGUAGE`, `CONTEXT-FORMAT`, `ADR-FORMAT`, `PLATFORM`). The 0.2.0 skill-flow refactor (one spine + marked detours, Laziness ladder in the base, two-tier agnosticism) is merged to `main`; see `skills/README.md` for the flow map and `docs/adr/0001`–`0002`.
 - `examples/wordstats` and `examples/ttlcache` are green reference projects.
 - `model-tests/` contains the model-test rubric, runbook, findings ledger, transcript extractor, and committed run index.
 - Bulky historical run artifacts are intentionally not in the repository path; they are archived locally under `/home/<you>/projects/archive/skills-model-test-runs-2026-06-20`.
@@ -64,12 +64,12 @@ Phase 1 empirical validation is now summarized. The completed validation set sup
 - See `model-tests/FINDINGS.md` for F1-F4 outcomes.
 - See `PRD.md` for the current validation matrix and acceptance criteria.
 - See `model-tests/RUNBOOK.md` for the operator procedure.
-- See `model-tests/REVISED-PLAN-SECOND-REVIEW.md` for historical implemented guidance behind the matrix.
+- See `model-tests/history/` for superseded planning docs (REVISED-PLAN, SECOND-REVIEW, INDEPENDENT-RECOMMENDATIONS, PATCH-REVIEW, CHANGELOG).
 - See `DEVELOPMENT.md` for ongoing issue → branch → validation → PR workflow and dev repo → public distribution repo release flow.
 
-Open follow-up issues: none currently in the validation/harness sequence.
+Open issues: none. v0.2.0 shipped to `main` (`ff9025f`). All GitHub issues closed.
 
-Recommended next action: push `feat/v0.2.0-flow`, open the 0.2.0 PR, then tag `v0.2.0` after merge and smoke-test the published `npx skills` install path.
+Recommended next action: tag `v0.2.0` and smoke-test the published `npx skills` install path.
 
 Completed Phase 1 validation:
 
@@ -86,6 +86,5 @@ Completed Phase 1 validation:
 
 ## Do not confuse with current work
 
-- `model-tests/REVISED-PLAN.md` is historical rationale, not the current roadmap.
-- `model-tests/REVISED-PLAN-SECOND-REVIEW.md` is implemented guidance plus validation criteria.
+- `model-tests/history/` contains superseded planning docs — not the current roadmap. The current roadmap is in `PRD.md` and `model-tests/FINDINGS.md`.
 - `model-tests/runs/` is ignored by design; do not reintroduce bulky transcripts or generated projects into the repository.

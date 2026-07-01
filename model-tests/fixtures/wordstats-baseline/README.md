@@ -1,0 +1,1 @@
+Baseline wordstats fixture for model-test runs (see [TESTING.md](../../TESTING.md)).
