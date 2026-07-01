@@ -8,13 +8,13 @@ per issue → `tdd`; single change: `tdd` directly) — with `debug` as a detour
 `tdd` and `refactor` as an on-ramp feeding `interview`. `interview` is the head
 even before a repo exists; its stack decisions reach `scaffold` through the same
 context window (no scratch file), and `scaffold` stamps them into the new repo's
-`AGENTS.md`. The map is the rewritten `skills/README.md` — one canonical map, no
-second file to drift from it.
+`AGENTS.md`. The detailed map lives in `skills/README.md`; the root README keeps
+a matching Mermaid overview for first-time visitors.
 
 **Considered Options:** a true single sequence everything passes through
 (rejected — it lies about the real branches, and users bounce when their case
 does not fit); a `scaffold`-first head for new projects (rejected — bootstraps
-before the design is known and splits the entry point in two).
+before the design is known and splits the head in two).
 
 **Consequences:** `handoff` covers any session break between `interview` and
 `scaffold`. `to-prd`/`to-issues` are skipped for single-session work, keeping the

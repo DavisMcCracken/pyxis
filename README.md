@@ -18,7 +18,7 @@ Only the `skills/` pack is installed — `model-tests/` and `examples/` are main
 
 ## The flow
 
-Match your situation to an entry point; most work then travels one spine, idea to shipped code.
+Match your situation, then follow the arrows; most work joins the `interview` → `tdd` spine.
 
 ```mermaid
 flowchart TD
@@ -27,16 +27,16 @@ flowchart TD
     bug(["A bug"]) -->|reproducible| tdd
     bug -->|"can't reproduce or<br>cause unclear"| debug
 
+    refactor -->|"a finding<br>becomes an idea"| interview
     interview -->|new repo| scaffold
     scaffold --> fork
-    interview --> fork{Multi-session<br>build?}
+    interview -->|existing repo| fork{Multi-session<br>build?}
     fork -->|yes| toprd[to-prd]
     toprd --> toissues[to-issues]
     toissues -->|"fresh session<br>per issue"| tdd
     fork -->|"no — same window"| tdd
     debug -->|"repro becomes<br>the first tdd test"| tdd
     tdd --> shipped([Shipped])
-    refactor -->|"a finding<br>becomes an idea"| interview
 ```
 
 One skill sits outside the graph: **`handoff`** is the bridge between context windows — run it from any long phase when context nears the model's smart-zone, and a fresh session picks up from the file it writes.
