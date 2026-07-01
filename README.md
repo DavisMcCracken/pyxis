@@ -2,7 +2,10 @@
 
 A Python agent workflow you can install: an `AGENTS.md` rule base plus a matching skill pack — uv + ruff + ty + pytest + hypothesis + prek, with tiered test-driven development built in. Install the pack and your coding agent scaffolds new Python projects green from commit zero, builds features test-first, and debugs reproduce-first — guided from idea to ship by one clear skill flow.
 
-Two layers, two reach. The **`AGENTS.md` base is agent-agnostic** — any agent that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …) follows the same rules. The **skill pack is written agnostic too**: it runs on any skills.sh-compatible agent, with any Claude-Code-specific step quarantined in a labelled `> **Claude Code:**` aside the reader can skip. No skills runtime? The base alone still does most of the work.
+Two layers, two reaches:
+
+- **`AGENTS.md` base** — agent-agnostic rules. Any agent that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …) follows them. No skills runtime? The base alone still does most of the work.
+- **Skill pack** — the procedures. Runs on any skills.sh-compatible agent; anything Claude-Code-specific is quarantined in a labelled `> **Claude Code:**` aside the reader can skip.
 
 ## Install
 
@@ -13,9 +16,30 @@ npx skills add DavisMcCracken/pyxis --skill scaffold    # or just one
 
 Only the `skills/` pack is installed — `model-tests/` and `examples/` are maintainer artifacts and never reach your install. No skills tool? Copy `skills/` into `~/.claude/skills/` by hand. Working without skills at all: follow the bootstrap lines at the top of [`AGENTS.md`](AGENTS.md).
 
-## Skills
+## The flow
 
-Listed in flow order — `interview` is the head; start there.
+Match your situation to an entry point; most work then travels one spine, idea to shipped code.
+
+```mermaid
+flowchart TD
+    idea(["An idea<br>(new or existing codebase)"]) --> interview
+    aging(["Aging codebase,<br>no specific idea"]) --> refactor
+    bug(["A bug"]) -->|reproducible| tdd
+    bug -->|"can't reproduce or<br>cause unclear"| debug
+
+    interview -->|new repo| scaffold
+    scaffold --> fork
+    interview --> fork{Multi-session<br>build?}
+    fork -->|yes| toprd[to-prd]
+    toprd --> toissues[to-issues]
+    toissues -->|"fresh session<br>per issue"| tdd
+    fork -->|"no — same window"| tdd
+    debug -->|"repro becomes<br>the first tdd test"| tdd
+    tdd --> shipped([Shipped])
+    refactor -->|"a finding<br>becomes an idea"| interview
+```
+
+One skill sits outside the graph: **`handoff`** is the bridge between context windows — run it from any long phase when context nears the model's smart-zone, and a fresh session picks up from the file it writes.
 
 | Skill | Reach for it when |
 |---|---|
@@ -28,7 +52,7 @@ Listed in flow order — `interview` is the head; start there.
 | [`refactor`](skills/refactor/SKILL.md) | Improving architecture — find shallow modules and deepen them |
 | [`handoff`](skills/handoff/SKILL.md) | Crossing context windows — compact a thread so a fresh session resumes it |
 
-See [skills/README.md](skills/README.md) for the flow map (what to run first and how the skills hand off), plus deploy and provenance notes.
+[skills/README.md](skills/README.md) has the step-by-step hand-offs between skills, the shared principles they all follow, and deploy notes.
 
 ## Repository layout
 
