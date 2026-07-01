@@ -1,17 +1,13 @@
 ---
 name: refactor
-description: Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
+description: Find deepening opportunities — turn shallow modules into deep ones. Use when the user wants to improve a codebase's architecture, consolidate tightly-coupled modules, or make code more testable and AI-navigable.
 ---
 
 # Refactor
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. Goal: testability and AI-navigability.
 
-Vocabulary: [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md) — **module, interface, implementation, depth, seam, adapter, leverage, locality**. Use those terms exactly; never drift into "component," "service," "API," "boundary." Three principles carry most of the weight:
-
-- **Deletion test** — delete the module in your head: complexity vanishes = pass-through; complexity reappears across N callers = earning its keep.
-- **The interface is the test surface.**
-- **One adapter = hypothetical seam; two = real.**
+Vocabulary and principles live in [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md) — **module, interface, implementation, depth, seam, adapter, leverage, locality**; use those terms exactly. Three of its principles carry most of the weight here: the **deletion test**, **the interface is the test surface**, and **one adapter = hypothetical, two = real**.
 
 The project's domain model informs the skill: domain language names the good seams; ADRs record decisions not to re-litigate.
 

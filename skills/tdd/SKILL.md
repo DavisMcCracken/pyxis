@@ -7,13 +7,11 @@ description: Builds features and fixes straightforward reproducible bugs one ver
 
 ## Philosophy
 
-**Core principle**: Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.
+Tests verify behavior through public interfaces, not implementation details — code can change entirely; the tests shouldn't. A good test reads like a specification: "user can checkout with valid cart" names a capability, not a mechanism.
 
-**Good tests** exercise real code paths through public APIs. They describe _what_ the system does, not _how_. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists. These tests survive refactors because they don't care about internal structure.
+The heuristic that sorts good from bad in one move: **a test that breaks under a refactor when behavior hasn't changed is bound to the implementation** — it tests _how_, not _what_. Good tests survive the refactor because they never see internal structure.
 
-**Bad tests** are coupled to implementation: they mock internal collaborators, test private functions, or verify through external means (querying the database directly instead of using the interface). The warning sign: your test breaks when you refactor but behavior hasn't changed.
-
-See [tests.md](tests.md) for Python examples and the faking/mocking rules. The architecture vocabulary (module, interface, seam, depth) is defined in [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md).
+[tests.md](tests.md) has the good/bad taxonomy with Python examples and the faking rules; architecture vocabulary (module, interface, seam, depth) lives in [../_shared/LANGUAGE.md](../_shared/LANGUAGE.md).
 
 ## Anti-Pattern: Horizontal Slices
 

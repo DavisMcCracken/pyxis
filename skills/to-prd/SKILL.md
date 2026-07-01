@@ -5,7 +5,7 @@ description: Turn a settled interview/design thread into a PRD document before t
 
 # To PRD
 
-Synthesize the current design thread into a PRD a fresh session can build from. Reach for this only on **multi-session builds** — a single change skips the PRD and goes straight to `tdd`. A PRD for a one-sitting change is ceremony to delete (AGENTS.md Laziness ladder, rung 1).
+Synthesize the current design thread into a PRD a fresh session can build from. Reach for this only on **multi-session builds** — a one-sitting change skips straight to `tdd`; a PRD for it is ceremony to delete (AGENTS.md Laziness ladder, rung 1).
 
 ## Inputs
 
@@ -23,7 +23,7 @@ Write one markdown file, lazily, under `docs/` (e.g. `docs/prd-<slug>.md`). Each
 - **Done criteria** — the checks that say the whole thing is finished (verify loop green, etc.).
 - **Sequencing** — only when deliverables have a real order or dependency.
 
-Decisions and acceptance, not prose. If a section would just describe, cut it.
+Decisions and acceptance, not prose.
 
 ## Handoffs
 
