@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Diagnoses hard or uncertain bugs by building a feedback loop, reproducing, hypothesizing, instrumenting, fixing, and regression-testing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
+description: Diagnose hard or uncertain bugs reproduce-first, building a feedback loop before hypothesizing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
 ---
 
 # Debug
@@ -11,9 +11,9 @@ Before exploring, load the project's domain glossary (`CONTEXT.md`, if present) 
 
 ## Phase 1 — Build a feedback loop
 
-**This phase IS the skill.** A fast, deterministic, agent-runnable pass/fail signal makes the rest mechanical — bisection, hypothesis tests, and instrumentation all just consume it. Without one, staring at code is all you have.
+**This phase IS the skill.** A *tight*, agent-runnable pass/fail signal makes the rest mechanical — bisection, hypothesis tests, and instrumentation all just consume it. Without one, staring at code is all you have.
 
-Spend disproportionate effort here. Be aggressive, be creative, refuse to give up.
+Spend disproportionate effort here.
 
 ### Construction options, roughly in order
 
@@ -28,15 +28,15 @@ Spend disproportionate effort here. Be aggressive, be creative, refuse to give u
 9. **Differential loop** — same input through old vs new version (or two configs), diff the outputs.
 10. **HITL script** — last resort when a human must click. Drive *them* with `scripts/hitl-loop.template.sh` so even manual steps feed structured output back.
 
-### Then improve the loop itself
+### Then make the loop tight
 
-Treat it as a product:
+A *tight* loop — fast, sharp, deterministic — is the product; treat it as one:
 
 - **Faster** — cache setup, skip unrelated init, narrow scope (`uv run pytest --last-failed -x` for test-shaped loops).
 - **Sharper** — assert the exact symptom, not "didn't crash".
 - **More deterministic** — inject the clock, seed RNG, isolate filesystem via `tmp_path`, freeze network.
 
-A 30-second flaky loop barely beats none. A 2-second deterministic loop is a superpower.
+A 30-second flaky loop barely beats none; make it 2 seconds and *tight*.
 
 ### Non-deterministic bugs
 
@@ -46,7 +46,7 @@ Chase reproduction *rate*, not perfection: loop the trigger 100×, parallelise, 
 
 Say so explicitly, list what you tried, and ask the user for: (a) access to a reproducing environment, (b) a captured artifact (HAR, log dump, core dump, timestamped recording), or (c) permission for temporary production instrumentation. Never hypothesise loopless.
 
-**Gate: no loop you believe in → no Phase 2.**
+**Gate: the loop goes *red* on the bug, or there's no Phase 2.**
 
 ## Phase 2 — Reproduce
 

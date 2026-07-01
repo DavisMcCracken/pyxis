@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: Scaffold a new Python project on the uv + ruff + ty + pytest + prek stack with the AGENTS.md base, green verify loop from commit zero. Use when the user wants to start, create, bootstrap, or scaffold a new Python project, package, library, CLI, or repo.
+description: Scaffold a new Python project on the uv + ruff + ty + pytest + prek stack. Use when the user wants to create or bootstrap a new Python project, package, library, CLI, or repo.
 ---
 
 # New Python Project

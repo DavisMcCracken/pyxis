@@ -5,7 +5,7 @@ description: Compact the live thread into a self-contained markdown file so a fr
 
 # Handoff
 
-Write a self-contained handoff file, then continue in a **fresh session** that reads it. This is the bridge between context windows — you do not keep going in place.
+Write a self-contained handoff file, then continue in a **fresh session** that reads it — the bridge between context windows.
 
 ## When it fires
 
@@ -29,4 +29,4 @@ Self-contained: assume the next session has none of this conversation. State and
 
 ## After
 
-- File written → open a fresh session and reference it to continue. Staying in the same conversation while letting earlier turns summarize is a different move — handoff forks to a clean session; it does not continue in place.
+- File written → open a fresh session and reference it to continue. Letting the current thread auto-summarize in place is a *different* move — handoff forks to a clean session, it does not continue in place.
