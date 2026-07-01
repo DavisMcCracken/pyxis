@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Diagnose hard or uncertain bugs reproduce-first, building a feedback loop before hypothesizing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
+description: Diagnose hard or uncertain bugs reproduce-first — build a feedback loop before hypothesizing. Use when reproduction or cause is unclear, the failure is intermittent or cross-system, or performance regressed.
 ---
 
 # Debug
@@ -11,7 +11,7 @@ Before exploring, load the project's domain glossary (`CONTEXT.md`, if present) 
 
 ## Phase 1 — Build a feedback loop
 
-**This phase IS the skill.** A *tight*, agent-runnable pass/fail signal makes the rest mechanical — bisection, hypothesis tests, and instrumentation all just consume it. Without one, staring at code is all you have.
+**This phase IS the skill.** A tight, agent-runnable pass/fail signal makes the rest mechanical — bisection, hypothesis tests, and instrumentation all just consume it. Without one, staring at code is all you have.
 
 Spend disproportionate effort here.
 
@@ -36,7 +36,7 @@ A *tight* loop — fast, sharp, deterministic — is the product; treat it as on
 - **Sharper** — assert the exact symptom, not "didn't crash".
 - **More deterministic** — inject the clock, seed RNG, isolate filesystem via `tmp_path`, freeze network.
 
-A 30-second flaky loop barely beats none; make it 2 seconds and *tight*.
+A 30-second flaky loop barely beats none; make it 2 seconds.
 
 ### Non-deterministic bugs
 
