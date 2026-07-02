@@ -25,7 +25,7 @@ Most work travels one **spine**, idea to shipped code; a few **detours** and **o
   bridge:   handoff  — at any long phase, when context nears the smart-zone, resume in a fresh session
 ```
 
-1. **`interview`** — grill the idea until the design is sharp; record terms in `CONTEXT.md` and decisions in `docs/adr/` when the project keeps them. The one entry point, new project or old.
+1. **`interview`** — grill the idea until the design is sharp; record terms in `CONTEXT.md` and decisions in `docs/adr/` when the project keeps them. The head, new project or old.
 2. **`scaffold`** *(detour, new repos only)* — bootstrap a green uv + ruff + ty + pytest + prek project; the stack decisions from the interview get stamped into the new `AGENTS.md`.
 3. **Fork — multi-session?**
    - **Yes** → **`to-prd`** (capture the thread as a PRD) → **`to-issues`** (split into independent, agent-ready issues). Then clear context and run each issue in a **fresh session** carrying the PRD + that one issue.
