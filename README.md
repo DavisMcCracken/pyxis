@@ -5,7 +5,7 @@ Pyxis is an installable Python agent workflow: one `AGENTS.md` rule base plus a 
 Two parts:
 
 - **`AGENTS.md` base**: agent-agnostic rules for any tool that reads `AGENTS.md` (Claude Code, Cursor, Codex, opencode, …). If your agent has no skills runtime, the base still carries most of the workflow.
-- **Skill pack**: the procedures. It runs on any skills.sh-compatible agent; Claude Code specifics stay in labelled `> **Claude Code:**` asides.
+- **Skill pack**: the procedures. It runs on any skills.sh-compatible agent; Claude Code specifics stay in labelled `> Claude Code:` asides.
 
 ## Install
 
